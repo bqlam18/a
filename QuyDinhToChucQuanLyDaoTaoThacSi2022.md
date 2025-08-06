@@ -73,6 +73,7 @@ ngữ không tính trong điểm trung bình tích lũy;
   e. Phần 5 – Luận văn Thạc Sĩ (LVThS), Đồ án tốt nghiệp (ĐATN), thực tập, các
 chuyên đề nghiên cứu khoa học.
 4. Khung Chương trình đào tạo (CTĐT) Thạc sĩ
+   
 | Nội dung                  | CTĐT Thạc sĩ ứng dụng<br/>[số tín chỉ] | CTĐT Thạc sĩ nghiên cứu<br/>[số tín chỉ] | CTĐT Thạc sĩ nghiên cứu chuyên sâu<br/>[số tín chỉ] |
 |---------------------------|----------------------------------------|------------------------------------------|---------------------------------------------------|
 | **Tổng số tín chỉ**       | **60**                                 | **60**                                   | **60**                                            |
