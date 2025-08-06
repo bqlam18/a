@@ -320,8 +320,7 @@ nhiệm thông báo thời khóa biểu đến Giảng viên (bao gồm cả Gi�
 **Điều 19. Đăng ký môn học**
 1. Để được tham gia học các môn học, học viên phải thực hiện các thủ tục đăng ký
 môn học, đóng học phí theo quy định.
-2. Trường tổ chức đăng ký môn học và đóng học phí theo học kỳ của năm học. Chỉ
-có các học viên được xếp và nhận thời khóa biểu học kỳ chính đúng hạn mới có đầy
+2. Trường tổ chức đăng ký môn học và đóng học phí theo học kỳ của năm học. Chỉ có các học viên được xếp và nhận thời khóa biểu học kỳ chính đúng hạn mới có đầy
 đủ quyền lợi của một học viên của trường trong học kỳ tương ứng. Nếu quá thời hạn quy định đăng ký môn học của học kỳ mà học viên vẫn không đăng ký bất kỳ môn học
 nào cho học kỳ tương ứng, Nhà trường sẽ ra quyết định cảnh báo học vụ đối với học
 viên trong học kỳ đó.
