@@ -366,7 +366,7 @@ Khoa phê duyệt. Căn cứ theo kết quả phê duyệt về chuyên môn c�
 Phòng Đào tạo sau đại học sẽ xét duyệt về học vụ để công nhận kết quả học tập của các
 môn học đó.
 
-**Điều 21. Rút môn học – điểm R**
+**Điều 21. Rút môn học – điểm R**  
 Học viên có thể xin rút môn học đã đăng ký khi đáp ứng các điều kiện sau:
 - Có kết quả đăng ký môn học – thời khóa biểu của học kỳ;
 - Đã nộp đủ học phí của học kỳ tương ứng;
