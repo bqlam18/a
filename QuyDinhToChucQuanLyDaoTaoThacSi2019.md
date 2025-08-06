@@ -295,12 +295,12 @@ tạo thạc sĩ. Thời hạn hiệu lực của chứng chỉ bồi dưỡng s
 cấp chứng chỉ. Tổng số tín chỉ tích lũy từ chứng chỉ bồi dưỡng sau đại học tối đa là
 50% số tín chỉ trong chương trình đào tạo Thạc sĩ.
 
-**Điều 17. Đăng ký môn học liên thông**
+**Điều 17. Đăng ký môn học liên thông**  
 Đối với ngành được tổ chức đồng thời ở nhiều cơ sở đào tạo của ĐHQG-HCM, nếu được
 sự đồng ý của Khoa quản lý ngành, học viên được quyền đăng ký môn học và tích lũy
 không quá 15% tín chỉ lựa chọn ở cơ sở khác cùng tổ chức đào tạo ngành.
 
-**Điều 18. Phân công giảng dạy, lập thời khóa biểu**
+**Điều 18. Phân công giảng dạy, lập thời khóa biểu**  
 Phòng Đào tạo sau đại học chủ trì và phối hợp với Khoa quản lý ngành, bộ môn phụ trách
 môn học trong việc phân công giảng dạy và lập thời khóa biểu (TKB) theo quy trình sau:
 1. Căn cứ Chương trình đào tạo, Phòng Đào tạo sau đại học lập kế hoạch giảng dạy
@@ -357,7 +357,7 @@ trước của môn học B (môn học sau), học viên cần đăng ký học
 8. Đăng ký môn học song hành: Nếu Chương trình đào tạo có các môn học song hành,
 học viên phải đăng ký học các môn học song hành trong cùng 1 học kỳ.
 
-**Điều 20. Miễn học và công nhận điểm môn học**
+**Điều 20. Miễn học và công nhận điểm môn học**  
 Trường hợp học viên đã có các chứng chỉ môn học sau đại học (do Trường Đại học Bách
 Khoa hoặc các cơ sở đào tạo khác cấp - có thời hạn 3 năm kể từ ngày cấp) hoặc đã hoàn
 tất các môn học thuộc khối kiến thức bổ sung thì sẽ được xem xét miễn học. Để được xem
