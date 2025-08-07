@@ -120,17 +120,16 @@ này, trong đó có ít nhất 12 tháng tập trung liên tục tại BM đào
 nghiên cứu.
 **Khung CTĐT trình độ tiến sĩ:**
 
-|                               | NCS đã có bằng thạc sĩ                                                    | NCS chỉ có bằng đại học<br/>(*ngành phù hợp*)      |
-|-------------------------------|---------------------------------------------------------------------------|--------------------------------------------------|
-|                               | *Ngành phù hợp*                                   | *Ngành gần*                                 |                                                  |
-|                               | *Tốt nghiệp dưới 5 năm* | *Tốt nghiệp trên 5 năm* | *Tốt nghiệp dưới 5 năm* | *Tốt nghiệp trên 5 năm* |                     |
-|-------------------------------|----------------------|------------------------|--------------------------|---------------------------|----------------------|
-| **Học phần bổ sung, chuyển đổi** | 0                    | 6 TC                   | 9 TC                     | 9 + 6 TC                  | Theo CTĐT thạc sĩ tương ứng |
-| **Học phần trình độ tiến sĩ**   | 10 TC                | 10 TC                  | 10 TC                    | 10 TC                     | 10 TC                |
-| **Chuyên đề tiến sĩ**           | 2 × 3 TC             | 2 × 3 TC               | 2 × 3 TC                 | 2 × 3 TC                  | 2 × 3 TC             |
-| **Tiểu luận tổng quan**         | 1 × 3 TC             | 1 × 3 TC               | 1 × 3 TC                 | 1 × 3 TC                  | 1 × 3 TC             |
-| **Nghiên cứu khoa học**         | 2 bài báo            | 2 bài báo              | 2 bài báo                | 2 bài báo                 | 2 bài báo            |
-| **Luận án tiến sĩ**             | 60 TC                | 60 TC                  | 60 TC                    | 60 TC                     | 60 TC                |
+|                            | NCS đã có bằng thạc sĩ                                                    | NCS chỉ có bằng đại học (*ngành phù hợp*) |
+|----------------------------|---------------------------------------------------------------------------|------------------------------------------|
+|                            | *Ngành phù hợp*   |                | *Ngành gần*       |                |                                          |
+|                            | *Tốt nghiệp dưới 5 năm* | *Tốt nghiệp trên 5 năm* | *Tốt nghiệp dưới 5 năm* | *Tốt nghiệp trên 5 năm* |                                          |
+| **Học phần bổ sung, chuyển đổi** | 0                   | 6 TC                   | 9 TC                    | 9 + 6 TC                 | Theo CTĐT thạc sĩ tương ứng              |
+| **Học phần trình độ tiến sĩ**    | 10 TC               | 10 TC                  | 10 TC                   | 10 TC                    | 10 TC                                    |
+| **Chuyên đề tiến sĩ**            | 2 × 3 TC            | 2 × 3 TC               | 2 × 3 TC                | 2 × 3 TC                 | 2 × 3 TC                                 |
+| **Tiểu luận tổng quan**          | 1 × 3 TC            | 1 × 3 TC               | 1 × 3 TC                | 1 × 3 TC                 | 1 × 3 TC                                 |
+| **Nghiên cứu khoa học**          | 2 bài báo           | 2 bài báo              | 2 bài báo               | 2 bài báo                | 2 bài báo                                |
+| **Luận án tiến sĩ**              | 60 TC               | 60 TC                  | 60 TC                   | 60 TC                    | 60 TC                                    |
 
 **Điều 8. Các học phần bổ sung, chuyển đổi**  
 Các học phần bổ sung, chuyển đổi là các học phần giúp NCS có đủ kiến thức và đạt
@@ -207,13 +206,13 @@ tiến sĩ. Đây là giai đoạn mà NCS có thể đạt tới tri thức m�
 thành các cơ sở quan trọng nhất để viết nên luận án tiến sĩ. Trên cơ sở tính chất của lĩnh
 vực nghiên cứu thuộc khoa học tự nhiên, khoa học kỹ thuật – công nghệ hoặc quản lý,
 các Khoa quản lý ngành/chuyên ngành, các BM Đào tạo và TTHD có các yêu cầu cụ
-thể đối với việc NCKH của NCS:
+thể đối với việc NCKH của NCS:  
   a. Đánh giá hiện trạng tri thức, hiện trạng giải pháp công nghệ liên quan đến đề tài
-luận án.
-  b. Yêu cầu điều tra, thực nghiệm để bổ sung các dữ liệu cần thiết.
-  c. Yêu cầu suy luận khoa học hoặc thiết kế giải pháp, gắn liền với thí nghiệm.
+luận án.  
+  b. Yêu cầu điều tra, thực nghiệm để bổ sung các dữ liệu cần thiết.  
+  c. Yêu cầu suy luận khoa học hoặc thiết kế giải pháp, gắn liền với thí nghiệm.  
   d. Phân tích, đánh giá các kết quả thu được từ quá trình suy luận khoa học hay thí
-nghiệm.
+nghiệm.  
 2. Nội dung, quy mô NCKH phải phù hợp với mục tiêu của luận án tiến sĩ với sự hỗ trợ tài
 chính của Trường trong khuôn khổ chủ trương gắn liền NCKH với đào tạo TS, tùy theo
 tính chất của đề tài mà TTHD và NCS phải xây dựng phương án đầu tư đủ kinh phí và
@@ -225,15 +224,15 @@ hành các quy định về sở hữu trí tuệ của Việt Nam và quốc t�
 thời gian đào tạo của NCS.
 4. Thời gian NCKH được bố trí trong thời gian đào tạo trình độ tiến sĩ.
 5. Trích từ nội dung NCKH của đề tài luận án, NCS được phép đề xuất và đăng ký nhận
-thực hiện đề tài NCKH cấp Trường để có kinh phí hỗ trợ thực hiện luận án.
+thực hiện đề tài NCKH cấp Trường để có kinh phí hỗ trợ thực hiện luận án.  
   a. Việc đề xuất và đăng ký tiến hành theo các quy định của Phòng Khoa học Công nghệ
-và Dự án trường ĐHBK.
+và Dự án trường ĐHBK.  
   b. Việc đề xuất và đăng ký phải được thực hiện trong năm đầu tiên kể từ ngày có quyết định công nhận NCS.
   c. Khi được chấp thuận thực hiện đề tài NCKH, NCS sẽ được cấp kinh phí không vượt
-mức tối đa mà Nhà nước quy định.
+mức tối đa mà Nhà nước quy định.  
   d. Trong dự toán kinh phí cần được cấp để thực hiện đề tài, NCS cần phải dự toán cả kinh
 phí tham dự hội nghị khoa học hay đăng công trình trên tạp chí chuyên ngành có uy tín
-ở nước ngoài.
+ở nước ngoài.  
 
 **Điều 11. Luận án tiến sĩ**
 1. LATS phải là một công trình NCKH sáng tạo của chính NCS, có đóng góp về mặt lý
@@ -255,26 +254,26 @@ phần được phép nợ không quá 3 TC.
 1. Khi tiếp nhận NCS, trên cơ sở các văn bằng và bảng điểm mà NCS đã đạt được, Khoa
 xem xét và xác định số tín chỉ các học phần chuyển đổi, bổ sung (nếu có) cho từng NCS.
 2. Trước mỗi đầu học kỳ, NCS phải thực hiện việc đăng ký học tập và nghiên cứu, bao
-gồm:
-  a. Đăng ký các học phần bổ sung, chuyển đổi (nếu có).
-  b. Đăng ký các học phần ở trình độ tiến sĩ.
-  c. Đăng ký các chuyên đề tiến sĩ, tiểu luận tổng quan.
-  d. Đăng ký học phần “Thực hiện luận án tiến sĩ”.
+gồm:  
+  a. Đăng ký các học phần bổ sung, chuyển đổi (nếu có).  
+  b. Đăng ký các học phần ở trình độ tiến sĩ.  
+  c. Đăng ký các chuyên đề tiến sĩ, tiểu luận tổng quan.  
+  d. Đăng ký học phần “Thực hiện luận án tiến sĩ”.  
 Việc đăng ký học tập và nghiên cứu này phải có sự đồng ý của TTHD. Trong trường
 hợp NCS đăng ký các học phần không thuộc CTĐT của ngành thì việc đăng ký này phải
 có sự đồng ý của TTHD và Khoa.
 3. Việc tổ chức đánh giá kết quả học tập và nghiên cứu của NCS được thực hiện vào cuối
-học kỳ và phải đảm bảo các yêu cầu sau đây:
-  a. Điểm hoàn thành các học phần bổ sung, chuyển đổi là từ 5.0 trở lên.
-  b. Điểm hoàn thành các học phần trình độ tiến sĩ là từ 7.0 trở lên.
+học kỳ và phải đảm bảo các yêu cầu sau đây:  
+  a. Điểm hoàn thành các học phần bổ sung, chuyển đổi là từ 5.0 trở lên.  
+  b. Điểm hoàn thành các học phần trình độ tiến sĩ là từ 7.0 trở lên.  
   c. Các chuyên đề tiến sĩ và tiểu luận tổng quan được đánh giá bằng hình thức bảo vệ có
 chấm điểm trước hội đồng vào cuối học kỳ. Điểm hoàn thành các chuyên đề tiến sĩ và
-tiểu luận tổng quan là từ 7.0 trở lên.
+tiểu luận tổng quan là từ 7.0 trở lên.  
   d. Học phần “Thực hiện luận án tiến sĩ” được đánh giá bằng hình thức báo cáo cho TTHD,
 bao gồm các hoạt động của NCS tại BM đào tạo, tham gia các hội nghị, hội thảo, các
 bài báo đã đăng tại hội nghị khoa học và tạp chí chuyên ngành, các đề tài NCKH đã
 tham gia và tiến độ thực hiện luận án tiến sĩ. Học phần này sẽ được TTHD đánh giá
-theo hai mức là “Hoàn thành” hay “Không hoàn thành”.
+theo hai mức là “Hoàn thành” hay “Không hoàn thành”.  
 4. Các học phần, chuyên đề tiến sĩ hoặc tiểu luận tổng quan không hoàn thành phải được
 thực hiện lại trong các học kỳ tiếp theo.
 5. Các môn học thuộc CTĐT trình độ thạc sĩ và tiến sĩ do Phòng Đào tạo SĐH tổ chức
