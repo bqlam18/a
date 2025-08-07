@@ -5,7 +5,7 @@ Kèm theo QĐ số: 279/QĐ–ĐHBK–ĐTSĐH ngày 25/01/2019 của Hiệu trư
 **1. Điều kiện xét tuyển**
 Thí sinh đăng ký xét tuyển chương trình dự bị tiến sĩ phải thỏa mãn các điều kiện sau:
 **1.1. Điều kiện văn bằng**  
-Thí sinh phải có một trong các văn bằng sau:
+Thí sinh phải có một trong các văn bằng sau:  
 - Bằng tốt nghiệp thạc sĩ chuyên ngành hoặc ngành phù hợp với ngành đăng ký học.
 - Bằng tốt nghiệp thạc sĩ ngành gần với ngành đăng ký học. Trường hợp này, người học phải
 được xem xét các môn học thuộc khối kiến thức bổ sung.
@@ -18,25 +18,25 @@ học thuộc khối kiến thức bổ sung.
 Người học được ít nhất một nhà khoa học có chức danh giáo sư, phó giáo sư hoặc có bằng
 tiến sĩ khoa học, tiến sĩ có chuyên môn phù hợp hướng dẫn. Mỗi người học được nhiều nhất
 là hai người hướng dẫn, trong đó phải có ít nhất một người hướng dẫn là giảng viên của
-Trường Đại học Bách Khoa - ĐHQG-HCM.
-**1.3. Bài luận về hướng nghiên cứu**
+Trường Đại học Bách Khoa - ĐHQG-HCM.  
+**1.3. Bài luận về hướng nghiên cứu**  
 Trình bày về hướng nghiên cứu hoặc chủ đề nghiên cứu: tổng quan tình hình nghiên cứu liên
 quan; lý do tại sao chọn hướng nghiên cứu; mục tiêu, nhiệm vụ và kết quả nghiên cứu dự
 kiến; những kinh nghiệm, kiến thức, sự hiểu biết cũng như những chuẩn bị của người dự tuyển
 trong vấn đề hay lĩnh vực dự định nghiên cứu. Bài luận được trình bày tối đa 10 trang trên
 khổ A4. Bài luận phải có chữ ký xác nhận của thí sinh và người hướng dẫn.
-**2. Quy trình xét tuyển**
+**2. Quy trình xét tuyển**  
 Thí sinh nộp hồ sơ đăng ký xét tuyển theo quy định của Phòng Đào tạo Sau đại học. Phòng
 Đào tạo Sau đại học kiểm tra, xem xét hồ sơ của thí sinh và công bố kết quả xét tuyển.
 
-**Điều 2. Chương trình dự bị tiến sĩ**
-**1. Các học phần tiến sĩ**
+**Điều 2. Chương trình dự bị tiến sĩ**  
+**1. Các học phần tiến sĩ**  
 Người học được đăng ký học các môn học ở học phần tiến sĩ cùng các nghiên cứu sinh chính
 thức. Tuy nhiên, người học không được thực hiện tiểu luận tổng quan và các chuyên đề tiến
 sĩ. Kết quả các môn học đã tích lũy được bảo lưu tối đa 24 tháng kể từ ngày thi hoặc bảo vệ
 kết thúc môn học đến ngày nộp hồ sơ đăng ký dự tuyển nghiên cứu sinh chính thức và được
-dùng để xét miễn môn học trong chương trình tiến sĩ chính thức.
-**2. Nghiên cứu khoa học**
+dùng để xét miễn môn học trong chương trình tiến sĩ chính thức.  
+**2. Nghiên cứu khoa học**  
 Người học được thực hiện các đề tài nghiên cứu khoa học, tham gia các hội nghị và công bố
 các bài báo khoa học trên các tạp chí trong và ngoài nước. Các bài báo khoa học được công
 bố trong thời gian dự bị tiến sĩ sẽ được công nhận trong điều kiện dự tuyển nghiên cứu sinh
