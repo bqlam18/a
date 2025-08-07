@@ -1,7 +1,7 @@
 # QUY ĐỊNH VỀ CHƯƠNG TRÌNH DỰ BỊ TIẾN SĨ
 Kèm theo QĐ số: 279/QĐ–ĐHBK–ĐTSĐH ngày 25/01/2019 của Hiệu trưởng
 
-**Điều 1. Tuyển sinh**  
+## Điều 1. Tuyển sinh 
 
 **1. Điều kiện xét tuyển**  
 Thí sinh đăng ký xét tuyển chương trình dự bị tiến sĩ phải thỏa mãn các điều kiện sau:  
@@ -34,7 +34,7 @@ khổ A4. Bài luận phải có chữ ký xác nhận của thí sinh và ngư�
 Thí sinh nộp hồ sơ đăng ký xét tuyển theo quy định của Phòng Đào tạo Sau đại học. Phòng
 Đào tạo Sau đại học kiểm tra, xem xét hồ sơ của thí sinh và công bố kết quả xét tuyển.
 
-**Điều 2. Chương trình dự bị tiến sĩ**  
+## Điều 2. Chương trình dự bị tiến sĩ  
 
 **1. Các học phần tiến sĩ**  
 Người học được đăng ký học các môn học ở học phần tiến sĩ cùng các nghiên cứu sinh chính
@@ -74,13 +74,13 @@ Thời gian học dự bị tiến sĩ tối đa là 24 tháng.
   - Được tham gia học tập, nghiên cứu cùng các nghiên cứu sinh chính thức.
   - Được tham gia các chương trình đào tạo, bồi dưỡng tiền tiến sĩ, phương pháp nghiên cứu
 khoa học.
-    - Được tích lũy tối đa 50% số tín chỉ trong chương trình đào tạo tiến sĩ tương ứng.
-    - Được tham gia nghiên cứu khoa học và công bố bài báo khoa học liên quan đến đề tài nghiên
+  - Được tích lũy tối đa 50% số tín chỉ trong chương trình đào tạo tiến sĩ tương ứng.
+  - Được tham gia nghiên cứu khoa học và công bố bài báo khoa học liên quan đến đề tài nghiên
 cứu. Các kết quả nghiên cứu này được sử dụng trong quá trình làm nghiên cứu sinh chính
 thức.
-    - Được ưu tiên xét tuyển nghiên cứu sinh chính thức khi người học dự bị tiến sĩ đã hoàn tất
+  - Được ưu tiên xét tuyển nghiên cứu sinh chính thức khi người học dự bị tiến sĩ đã hoàn tất
 các điều kiện xét tuyển nghiên cứu sinh theo yêu cầu của nhà trường.
-    - Thời gian học dự bị tiến sĩ không tính trong thời gian đào tạo tiến sĩ.
+  - Thời gian học dự bị tiến sĩ không tính trong thời gian đào tạo tiến sĩ.
 **4.2. Trách nhiệm của người học dự bị tiến sĩ**  
   - Tuân thủ các quy định về học tập, nghiên cứu của nhà trường.
   - Thực hiện các nghĩa vụ tài chính đối với quá trình đào tạo theo quy định của nhà trường.
