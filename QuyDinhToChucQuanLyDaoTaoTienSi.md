@@ -117,19 +117,31 @@ liên tục, đối với NCS tốt nghiệp đại học có CTĐT 4 năm là 5
   b. Trường hợp NCS không theo học tập trung liên tục được và được Trường chấp nhận thì
 NCS phải có tổng thời gian học tập và nghiên cứu như quy định tại khoản 6a của Điều
 này, trong đó có ít nhất 12 tháng tập trung liên tục tại BM đào tạo để thực hiện đề tài
-nghiên cứu.
-**Khung CTĐT trình độ tiến sĩ:**
+nghiên cứu.  
+**Khung CTĐT trình độ tiến sĩ (NCS đã có bằng thạc sĩ):**  
 
-|                            | NCS đã có bằng thạc sĩ                                                    | NCS chỉ có bằng đại học (*ngành phù hợp*) |
-|----------------------------|---------------------------------------------------------------------------|------------------------------------------|
-|                            | *Ngành phù hợp*   |                | *Ngành gần*       |                |                                          |
-|                            | *Tốt nghiệp dưới 5 năm* | *Tốt nghiệp trên 5 năm* | *Tốt nghiệp dưới 5 năm* | *Tốt nghiệp trên 5 năm* |                                          |
-| **Học phần bổ sung, chuyển đổi** | 0                   | 6 TC                   | 9 TC                    | 9 + 6 TC                 | Theo CTĐT thạc sĩ tương ứng              |
-| **Học phần trình độ tiến sĩ**    | 10 TC               | 10 TC                  | 10 TC                   | 10 TC                    | 10 TC                                    |
-| **Chuyên đề tiến sĩ**            | 2 × 3 TC            | 2 × 3 TC               | 2 × 3 TC                | 2 × 3 TC                 | 2 × 3 TC                                 |
-| **Tiểu luận tổng quan**          | 1 × 3 TC            | 1 × 3 TC               | 1 × 3 TC                | 1 × 3 TC                 | 1 × 3 TC                                 |
-| **Nghiên cứu khoa học**          | 2 bài báo           | 2 bài báo              | 2 bài báo               | 2 bài báo                | 2 bài báo                                |
-| **Luận án tiến sĩ**              | 60 TC               | 60 TC                  | 60 TC                   | 60 TC                    | 60 TC                                    |
+|                           | Ngành phù hợp                 | Ngành gần                        |
+|---------------------------|-------------------------------|----------------------------------|
+|                           | Tốt nghiệp dưới 5 năm | Tốt nghiệp trên 5 năm | Tốt nghiệp dưới 5 năm | Tốt nghiệp trên 5 năm |
+| **Học phần bổ sung, chuyển đổi** | 0                 | 6 TC                | 9 TC                | 9 + 6 TC             |
+| **Học phần trình độ tiến sĩ**    | 10 TC             | 10 TC               | 10 TC               | 10 TC                |
+| **Chuyên đề tiến sĩ**            | 2 × 3 TC          | 2 × 3 TC            | 2 × 3 TC            | 2 × 3 TC             |
+| **Tiểu luận tổng quan**          | 1 × 3 TC          | 1 × 3 TC            | 1 × 3 TC            | 1 × 3 TC             |
+| **Nghiên cứu khoa học**          | 2 bài báo         | 2 bài báo           | 2 bài báo           | 2 bài báo            |
+| **Luận án tiến sĩ**              | 60 TC             | 60 TC               | 60 TC               | 60 TC                |
+
+**Khung CTĐT trình độ tiến sĩ (NCS chỉ có bằng đại học - ngành phù hợp):**
+
+|                           | Nội dung                                    |
+|---------------------------|---------------------------------------------|
+| **Học phần bổ sung, chuyển đổi** | Theo CTĐT thạc sĩ tương ứng           |
+| **Học phần trình độ tiến sĩ**    | 10 TC                                  |
+| **Chuyên đề tiến sĩ**            | 2 × 3 TC                               |
+| **Tiểu luận tổng quan**          | 1 × 3 TC                               |
+| **Nghiên cứu khoa học**          | 2 bài báo                              |
+| **Luận án tiến sĩ**              | 60 TC                                  |
+
+
 
 **Điều 8. Các học phần bổ sung, chuyển đổi**  
 Các học phần bổ sung, chuyển đổi là các học phần giúp NCS có đủ kiến thức và đạt
