@@ -120,17 +120,17 @@ này, trong đó có ít nhất 12 tháng tập trung liên tục tại BM đào
 nghiên cứu.  
 **Khung CTĐT trình độ tiến sĩ (NCS đã có bằng thạc sĩ):**  
 
-|                           | Ngành phù hợp                 | Ngành gần                        |
-|---------------------------|-------------------------------|----------------------------------|
-|                           | Tốt nghiệp dưới 5 năm | Tốt nghiệp trên 5 năm | Tốt nghiệp dưới 5 năm | Tốt nghiệp trên 5 năm |
-| **Học phần bổ sung, chuyển đổi** | 0                 | 6 TC                | 9 TC                | 9 + 6 TC             |
-| **Học phần trình độ tiến sĩ**    | 10 TC             | 10 TC               | 10 TC               | 10 TC                |
-| **Chuyên đề tiến sĩ**            | 2 × 3 TC          | 2 × 3 TC            | 2 × 3 TC            | 2 × 3 TC             |
-| **Tiểu luận tổng quan**          | 1 × 3 TC          | 1 × 3 TC            | 1 × 3 TC            | 1 × 3 TC             |
-| **Nghiên cứu khoa học**          | 2 bài báo         | 2 bài báo           | 2 bài báo           | 2 bài báo            |
-| **Luận án tiến sĩ**              | 60 TC             | 60 TC               | 60 TC               | 60 TC                |
+|                           | Ngành phù hợp              | Ngành phù hợp             | Ngành gần                | Ngành gần                |
+|---------------------------|----------------------------|---------------------------|--------------------------|--------------------------|
+|                           | Tốt nghiệp dưới 5 năm      | Tốt nghiệp trên 5 năm     | Tốt nghiệp dưới 5 năm    | Tốt nghiệp trên 5 năm    |
+| **Học phần bổ sung, chuyển đổi** | 0                    | 6 TC                      | 9 TC                     | 9 + 6 TC                 |
+| **Học phần trình độ tiến sĩ**    | 10 TC                | 10 TC                     | 10 TC                    | 10 TC                    |
+| **Chuyên đề tiến sĩ**            | 2 × 3 TC             | 2 × 3 TC                  | 2 × 3 TC                 | 2 × 3 TC                 |
+| **Tiểu luận tổng quan**          | 1 × 3 TC             | 1 × 3 TC                  | 1 × 3 TC                 | 1 × 3 TC                 |
+| **Nghiên cứu khoa học**          | 2 bài báo            | 2 bài báo                 | 2 bài báo                | 2 bài báo                |
+| **Luận án tiến sĩ**              | 60 TC                | 60 TC                     | 60 TC                    | 60 TC                    |
 
-**Khung CTĐT trình độ tiến sĩ (NCS chỉ có bằng đại học - ngành phù hợp):**
+**Khung CTĐT trình độ tiến sĩ (NCS chỉ có bằng đại học - ngành phù hợp):**  
 
 |                           | Nội dung                                    |
 |---------------------------|---------------------------------------------|
