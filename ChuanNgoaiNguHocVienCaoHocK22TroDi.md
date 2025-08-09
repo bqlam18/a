@@ -8,7 +8,7 @@ Căn cứ Quyết định số 26/2014/QĐ-TTg ngày 26 tháng 3 năm 2014 của
 Căn cứ Quyết định số 767/QĐ-ĐHQG-TCCB ngày 12 tháng 9 năm 2006 của Giám đốc Đại học Quốc gia Tp.HCM về việc ban hành Quy chế về tổ chức và hoạt động của Trường Đại học Bách Khoa và Quyết định số 803/QĐ-ĐHQG-TCCB ngày 16 tháng 7 năm 2009 của Giám đốc Đại học Quốc gia Tp.HCM về việc phê duyệt sửa đổi, bổ sung Điều 15 Quy chế về tổ chức & hoạt động của Trường Đại học Bách Khoa;  
 
 Căn cứ Luật Giáo dục đại học số 08/2012/QH13 ngày 18/06/2012 của Quốc hội và Luật sửa đổi bổ sung một số điều của Luật Giáo dục Đại học số 34/2018/QH14 ngày 19/11/2018 của Quốc hội;  
-định chi tiết và hướng dẫn thi hành một số điều của Luật sửa đổi, bổ sung một số điều của Luật Giáo dục đại học;  
+
 Căn cứ Nghị định số 99/2019/NĐ-CP ngày 30/12/2019 của Chính Phủ về việc quy định chi tiết và hướng dẫn thi hành một số điều của Luật sửa đổi, bổ sung một số điều của Luật Giáo dục đại học;  
 
 Căn cứ Thông tư số 17/2021/TT-BGDĐT ngày 22/06/2021 về việc ban hành "Quy định về chuẩn chương trình đào tạo; xây dựng, thẩm định và ban hành chương trình đào tạo các trình độ của Giáo dục Đại học” của Bộ Giáo dục và Đào tạo;  
