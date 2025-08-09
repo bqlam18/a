@@ -1,15 +1,15 @@
 # QUYẾT ĐỊNH
 **Về việc ban hành Qui định Chuẩn trình độ ngoại ngữ đào tạo sau đại học tại Trường Đại học Bách Khoa – ĐHQG-HCM**
 
-## HIỆU TRƯỞNG TRƯỜNG ĐẠI HỌC BÁCH KHOA
+## HIỆU TRƯỞNG TRƯỜNG ĐẠI HỌC BÁCH KHOA  
 
-Căn cứ Quyết định số 26/2014/QĐ-TTg ngày 26 tháng 3 năm 2014 của Thủ tướng chính phủ về việc Ban hành Quy định về Tổ chức và hoạt động của Đại học Quốc gia và các cơ sở giáo dục đại học thành viên;
-Căn cứ Quyết định số 867/QĐ-ĐHQG ngày 17 tháng 8 năm 2016 của Giám đốc Đại học Quốc gia TP.HCM về việc ban hành Quy định về tổ chức và hoạt động của các trường đại học thành viên và khoa trực thuộc Đại học Quốc gia TP.HCM;
-Căn cứ Quyết định số 160/QĐ-ĐHQG ngày 24 tháng 3 năm 2017 của Giám đốc Đại học Quốc gia TP.HCM về việc ban hành Quy định đào tạo trình độ thạc sĩ;
-Căn cứ Quyết định số 992/QĐ-ĐHQG-ĐH&SĐH ngày 04 tháng 9 năm 2013 của Giám đốc Đại học Quốc gia TP.HCM về việc ban hành Quy định Chứng chỉ tiếng Anh Đại học Quốc gia TP.HCM;
-Căn cứ Quyết định số 170/QĐ-ĐHQG ngày 27 tháng 02 năm 2018 của Giám đốc Đại học Quốc gia TP.HCM về việc ban hành Quy định Chuẩn trình độ ngoại ngữ tại Đại học Quốc gia TP.HCM;
-Căn cứ Công văn số 2180/ĐHQG-ĐH ngày 31 tháng 10 năm 2016 của Giám đốc Đại học Quốc gia TP.HCM về việc thực hiện chuẩn tiếng Anh đầu ra đối vời đào tạo trình độ đại học không chuyên ngữ khóa tuyển 2013, 2014, 2015;
-Theo đề nghị của Ông Trưởng Phòng Đào tạo Sau đại học,
+Căn cứ Quyết định số 26/2014/QĐ-TTg ngày 26 tháng 3 năm 2014 của Thủ tướng chính phủ về việc Ban hành Quy định về Tổ chức và hoạt động của Đại học Quốc gia và các cơ sở giáo dục đại học thành viên;  
+Căn cứ Quyết định số 867/QĐ-ĐHQG ngày 17 tháng 8 năm 2016 của Giám đốc Đại học Quốc gia TP.HCM về việc ban hành Quy định về tổ chức và hoạt động của các trường đại học thành viên và khoa trực thuộc Đại học Quốc gia TP.HCM;  
+Căn cứ Quyết định số 160/QĐ-ĐHQG ngày 24 tháng 3 năm 2017 của Giám đốc Đại học Quốc gia TP.HCM về việc ban hành Quy định đào tạo trình độ thạc sĩ;  
+Căn cứ Quyết định số 992/QĐ-ĐHQG-ĐH&SĐH ngày 04 tháng 9 năm 2013 của Giám đốc Đại học Quốc gia TP.HCM về việc ban hành Quy định Chứng chỉ tiếng Anh Đại học Quốc gia TP.HCM;  
+Căn cứ Quyết định số 170/QĐ-ĐHQG ngày 27 tháng 02 năm 2018 của Giám đốc Đại học Quốc gia TP.HCM về việc ban hành Quy định Chuẩn trình độ ngoại ngữ tại Đại học Quốc gia TP.HCM;  
+Căn cứ Công văn số 2180/ĐHQG-ĐH ngày 31 tháng 10 năm 2016 của Giám đốc Đại học Quốc gia TP.HCM về việc thực hiện chuẩn tiếng Anh đầu ra đối vời đào tạo trình độ đại học không chuyên ngữ khóa tuyển 2013, 2014, 2015;  
+Theo đề nghị của Ông Trưởng Phòng Đào tạo Sau đại học,  
 
 ## QUYẾT ĐỊNH
 
