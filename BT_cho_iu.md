@@ -65,40 +65,40 @@ Chú thích:
 
 ---
 
-## 2) Quy trình SCOR và hệ thống hỗ trợ
+## 2) Quy trình SCOR và hệ thống hỗ trợ (đã sửa)
 
 ```mermaid
 flowchart TB
-  %% SCOR Phân rã và gán hệ thống
+  %% SCOR phân rã và gán hệ thống
   subgraph PLAN [Plan]
-    P1[Forecast & S&OP]
-    P2[MPS/MRP (ERP)]
-    P3[Finite Scheduling (MES)]
+    P1[Forecast and Sales and Operations Planning]
+    P2[MPS and MRP (ERP)]
+    P3[Finite scheduling (MES)]
   end
 
   subgraph SOURCE [Source]
-    S1[Mua sắm (ERP)]
-    S2[Tiếp nhận & QC (LIMS)]
-    S3[Putaway/FEFO (WMS)]
+    S1[Procurement (ERP)]
+    S2[Inbound receiving and QC (LIMS)]
+    S3[Putaway and FEFO (WMS)]
   end
 
   subgraph MAKE [Make]
-    M1[Điều độ & Thực thi (MES)]
-    M2[Giám sát công đoạn (SCADA/PLC)]
-    M3[SPC & eBR (MES/LIMS)]
-    M4[Genealogy/Trace (MES)]
-    M5[Bảo trì (CMMS)]
-    M6[Quản lý năng lượng (EMS)]
+    M1[Dispatch and execution (MES)]
+    M2[Process monitoring (SCADA and PLC)]
+    M3[SPC and eBR (MES and LIMS)]
+    M4[Genealogy and Traceability (MES)]
+    M5[Maintenance (CMMS)]
+    M6[Energy management (EMS)]
   end
 
   subgraph DELIVER [Deliver]
-    D1[Pick/Pack (WMS)]
-    D2[Outbound & TMS (ERP/TMS)]
+    D1[Pick and Pack (WMS)]
+    D2[Outbound and TMS (ERP or TMS)]
   end
 
   subgraph RETURN [Return]
-    R1[Nonconformance & CAPA (QMS)]
-    R2[Truy xuất & Thu hồi (MES/ERP)]
+    R1[Nonconformance and CAPA (QMS)]
+    R2[Recall and Trace (MES and ERP)]
   end
 
   P1 --> P2 --> P3 --> S1
@@ -110,64 +110,60 @@ flowchart TB
 
 ---
 
-## 3) Dòng dữ liệu OEE (Availability–Performance–Quality)
+## 3) Dòng dữ liệu OEE (đã sửa)
 
 ```mermaid
 flowchart TB
-  subgraph Sources [Nguồn dữ liệu]
-    SC1[SCADA/HMI<br/>Trạng thái máy, thời gian dừng, tốc độ]
-    SC2[Cảm biến đếm sản phẩm]
-    MES1[MES/SFC<br/>Lệnh, sản lượng, thời gian ca]
-    LIMS1[LIMS/QC<br/>Pass/Fail, COA]
+  subgraph Sources [Data sources]
+    SC1[SCADA HMI: machine state, downtime, speed]
+    SC2[Sensors: product counter]
+    MES1[MES: orders, output, shift time]
+    LIMS1[LIMS QC: pass or fail, COA]
   end
 
-  subgraph Metrics [Thành phần OEE]
-    A[Availability<br/>Run Time / Planned Time]
-    P[Performance<br/>(Ideal Cycle × Total Count)/Run Time]
-    Q[Quality<br/>Good/Total]
+  subgraph Metrics [OEE components]
+    A[Availability = Run Time / Planned Time]
+    P[Performance = (Ideal Cycle Time x Total Count) / Run Time]
+    Q[Quality = Good Count / Total Count]
   end
 
-  subgraph KPI [KPI]
-    OEE[OEE = A × P × Q]
-    FPY[FPY]
+  subgraph KPI [KPIs]
+    OEE[OEE = Availability x Performance x Quality]
+    FPY[First Pass Yield (FPY)]
     Pareto[Downtime Pareto]
   end
 
   SC1 --> A
   MES1 --> A
+
   SC1 --> P
   SC2 --> P
   MES1 --> P
+
   MES1 --> Q
   LIMS1 --> Q
 
   A --> OEE
   P --> OEE
   Q --> OEE
+
   SC1 --> Pareto
 ```
 
-Gợi ý dashboard: OEE theo ca/line, Top 10 downtime, FPY, tốc độ thực tế vs. chuẩn, kWh/tấn theo line.
-
 ---
 
-## 4) Bậc trưởng thành số hóa theo acatech (ví dụ minh họa)
+## 4) Bậc trưởng thành số hóa theo acatech (đã sửa)
 
 ```mermaid
 flowchart LR
-  L1[1. Computerization<br/>Phần mềm rời rạc, Excel, ERP cơ bản] --> 
-  L2[2. Connectivity<br/>Kết nối ERP–MES; SCADA thu thập tự động] --> 
-  L3[3. Visibility<br/>Dashboard thời gian thực (OEE, năng lượng)] --> 
-  L4[4. Transparency<br/>Phân tích nguyên nhân gốc, mô hình quá trình] --> 
-  L5[5. Predictability<br/>Dự báo hỏng hóc (PdM), dự báo chất lượng/năng lực] --> 
-  L6[6. Adaptability<br/>Tối ưu/lập lịch tự động, điều chỉnh theo thời gian thực]
+  L1[1. Computerization - basic IT and ERP]
+  L2[2. Connectivity - connected systems and data collection]
+  L3[3. Visibility - real time dashboards (OEE and energy)]
+  L4[4. Transparency - root cause analysis and process models]
+  L5[5. Predictability - predictive maintenance and forecasting]
+  L6[6. Adaptability - self optimization and dynamic scheduling]
 
-  click L1 "#" "Mức 1"
-  click L2 "#" "Mức 2"
-  click L3 "#" "Mức 3"
-  click L4 "#" "Mức 4"
-  click L5 "#" "Mức 5"
-  click L6 "#" "Mức 6"
+  L1 --> L2 --> L3 --> L4 --> L5 --> L6
 ```
 
 Cách dùng:
