@@ -65,105 +65,99 @@ Chú thích:
 
 ---
 
-## 2) Quy trình SCOR và hệ thống hỗ trợ (đã sửa)
+## SCOR flow (phiên bản an toàn cho GitHub)
 
 ```mermaid
 flowchart TB
-  %% SCOR phân rã và gán hệ thống
-  subgraph PLAN [Plan]
-    P1[Forecast and Sales and Operations Planning]
-    P2[MPS and MRP (ERP)]
-    P3[Finite scheduling (MES)]
-  end
+  P1["Forecast and S and OP"]
+  P2["MPS and MRP - ERP"]
+  P3["Finite scheduling - MES"]
 
-  subgraph SOURCE [Source]
-    S1[Procurement (ERP)]
-    S2[Inbound receiving and QC (LIMS)]
-    S3[Putaway and FEFO (WMS)]
-  end
+  S1["Procurement - ERP"]
+  S2["Inbound receiving and QC - LIMS"]
+  S3["Putaway and FEFO - WMS"]
 
-  subgraph MAKE [Make]
-    M1[Dispatch and execution (MES)]
-    M2[Process monitoring (SCADA and PLC)]
-    M3[SPC and eBR (MES and LIMS)]
-    M4[Genealogy and Traceability (MES)]
-    M5[Maintenance (CMMS)]
-    M6[Energy management (EMS)]
-  end
+  M1["Dispatch and execution - MES"]
+  M2["Process monitoring - SCADA and PLC"]
+  M3["SPC and eBR - MES and LIMS"]
+  M4["Genealogy and Traceability - MES"]
 
-  subgraph DELIVER [Deliver]
-    D1[Pick and Pack (WMS)]
-    D2[Outbound and TMS (ERP or TMS)]
-  end
+  D1["Pick and Pack - WMS"]
+  D2["Outbound - TMS or ERP"]
 
-  subgraph RETURN [Return]
-    R1[Nonconformance and CAPA (QMS)]
-    R2[Recall and Trace (MES and ERP)]
-  end
+  R1["Nonconformance and CAPA - QMS"]
+  R2["Recall and Trace - MES and ERP"]
 
-  P1 --> P2 --> P3 --> S1
-  S1 --> S2 --> S3 --> M1
-  M1 --> M2 --> M3 --> M4 --> D1 --> D2
+  P1 --> P2
+  P2 --> P3
+  P3 --> S1
+  S1 --> S2
+  S2 --> S3
+  S3 --> M1
+  M1 --> M2
+  M2 --> M3
+  M3 --> M4
+  M4 --> D1
+  D1 --> D2
   M3 --> R1
   M4 --> R2
 ```
 
----
-
-## 3) Dòng dữ liệu OEE (đã sửa)
+## OEE data flow (phiên bản an toàn cho GitHub)
+Lưu ý: công thức sẽ ghi ngoài sơ đồ để tránh lỗi parser:
+- Availability = Run Time / Planned Time
+- Performance = Ideal Cycle Time x Total Count / Run Time
+- Quality = Good Count / Total Count
+- OEE = Availability x Performance x Quality
 
 ```mermaid
 flowchart TB
-  subgraph Sources [Data sources]
-    SC1[SCADA HMI: machine state, downtime, speed]
-    SC2[Sensors: product counter]
-    MES1[MES: orders, output, shift time]
-    LIMS1[LIMS QC: pass or fail, COA]
-  end
+  SC1["SCADA HMI - machine state and downtime and speed"]
+  SC2["Sensors - product counter"]
+  MES1["MES - orders and output and shift time"]
+  LIMS1["LIMS QC - pass or fail and COA"]
 
-  subgraph Metrics [OEE components]
-    A[Availability = Run Time / Planned Time]
-    P[Performance = (Ideal Cycle Time x Total Count) / Run Time]
-    Q[Quality = Good Count / Total Count]
-  end
+  A["Availability"]
+  Pm["Performance"]
+  Ql["Quality"]
 
-  subgraph KPI [KPIs]
-    OEE[OEE = Availability x Performance x Quality]
-    FPY[First Pass Yield (FPY)]
-    Pareto[Downtime Pareto]
-  end
+  OEE["OEE"]
+  FPY["First Pass Yield"]
+  Pareto["Downtime Pareto"]
 
   SC1 --> A
   MES1 --> A
 
-  SC1 --> P
-  SC2 --> P
-  MES1 --> P
+  SC1 --> Pm
+  SC2 --> Pm
+  MES1 --> Pm
 
-  MES1 --> Q
-  LIMS1 --> Q
+  MES1 --> Ql
+  LIMS1 --> Ql
 
   A --> OEE
-  P --> OEE
-  Q --> OEE
+  Pm --> OEE
+  Ql --> OEE
 
   SC1 --> Pareto
 ```
 
----
-
-## 4) Bậc trưởng thành số hóa theo acatech (đã sửa)
+## acatech levels (phiên bản an toàn cho GitHub)
 
 ```mermaid
 flowchart LR
-  L1[1. Computerization - basic IT and ERP]
-  L2[2. Connectivity - connected systems and data collection]
-  L3[3. Visibility - real time dashboards (OEE and energy)]
-  L4[4. Transparency - root cause analysis and process models]
-  L5[5. Predictability - predictive maintenance and forecasting]
-  L6[6. Adaptability - self optimization and dynamic scheduling]
+  L1["1. Computerization - basic IT and ERP"]
+  L2["2. Connectivity - connected systems and data collection"]
+  L3["3. Visibility - real time dashboards for OEE and energy"]
+  L4["4. Transparency - root cause analysis and process models"]
+  L5["5. Predictability - predictive maintenance and forecasting"]
+  L6["6. Adaptability - self optimization and dynamic scheduling"]
 
-  L1 --> L2 --> L3 --> L4 --> L5 --> L6
+  L1 --> L2
+  L2 --> L3
+  L3 --> L4
+  L4 --> L5
+  L5 --> L6
 ```
 
 Cách dùng:
