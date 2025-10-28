@@ -1,3 +1,4 @@
+```mermaid
 flowchart LR
   U["User (Internet/Phone)"] -->|HTTPS| G["Ngrok Cloud"]
   G -->|Secure tunnel| N["NGINX on Laptop:80"]
