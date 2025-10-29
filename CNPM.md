@@ -1,14 +1,16 @@
+# Demo Sequence Diagram (Mermaid)
+
+Dán khối code Mermaid trong Markdown như bên dưới:
+
+```mermaid
 sequenceDiagram
-  %% Optional: autonumber to number each message
   autonumber
 
-  %% Define participants/actors
   actor User
   participant Web as Web App
   participant API
   participant DB
 
-  %% Message flow
   User->>Web: Clicks "Sign in"
   activate Web
   Web->>API: POST /login (email, password)
@@ -19,3 +21,4 @@ sequenceDiagram
   deactivate API
   Web-->>User: Redirect to dashboard
   deactivate Web
+```
