@@ -1,8 +1,8 @@
 # UC — Truy Cập Tài Liệu Môn Học (Access Course Materials)
 
 Tiền điều kiện
-- Sinh viên đã đăng nhập (qua SSO).
-- Hệ thống đã kết nối được với HCMUT_LIBRARY.
+- Sinh viên đã đăng nhập qua SSO.
+- Hệ thống đã kết nối với HCMUT_LIBRARY.
 
 ```mermaid
 sequenceDiagram
@@ -11,24 +11,31 @@ sequenceDiagram
   participant SYS as Hệ thống (Cổng Tutor/Mentor)
   participant LIB as HCMUT_LIBRARY
 
-  Note over SV,SYS: SV đã đăng nhập; hệ thống có kết nối đến HCMUT_LIBRARY
+  Note over SV,SYS: SV đã đăng nhập; hệ thống đã kết nối với HCMUT_LIBRARY
 
   %% Trigger
-  SV->>SYS: Nhấp "Tài liệu môn học" trong trang môn X
+  SV->>SYS: Chọn mục Tài liệu môn học của môn X
 
-  %% Steps 1-3
-  SYS->>LIB: Tra cứu tài liệu liên quan đến môn X
-  alt Tìm thấy tài liệu
+  %% Tra cứu tài liệu
+  SYS->>LIB: Tìm tài liệu liên quan đến môn X
+
+  alt Có tài liệu
     LIB-->>SYS: Danh sách tài liệu (tiêu đề, loại, liên kết)
-    %% Step 4
-    SYS-->>SV: Hiển thị danh sách tài liệu (liên kết trực tiếp)
-    %% Step 5
-    SV->>SYS: Chọn tài liệu D để xem/tải
-    SYS->>LIB: Yêu cầu quyền/URL truy cập tài liệu D
-    LIB-->>SYS: URL/stream tài liệu D
-    SYS-->>SV: Mở/tải tài liệu D
+    SYS-->>SV: Hiển thị danh sách tài liệu
+
+    SV->>SYS: Chọn tài liệu D để xem hoặc tải
+    SYS->>LIB: Yêu cầu quyền truy cập hoặc URL của tài liệu D
+
+    alt Được cấp quyền
+      LIB-->>SYS: URL hoặc stream của tài liệu D
+      SYS-->>SV: Mở hoặc tải tài liệu D
+    else Không đủ quyền hoặc không tồn tại
+      LIB-->>SYS: 403 hoặc 404
+      SYS-->>SV: Thông báo lỗi tương ứng
+    end
+
   else Không tìm thấy hoặc lỗi kết nối
-    LIB-->>SYS: 404/5xx hoặc danh sách rỗng
-    SYS-->>SV: Thông báo "Không tìm thấy tài liệu liên quan từ thư viện hoặc lỗi kết nối."
+    LIB-->>SYS: Danh sách rỗng hoặc lỗi 5xx
+    SYS-->>SV: Thông báo không tìm thấy tài liệu hoặc lỗi kết nối
   end
 ```
