@@ -2,7 +2,7 @@
 
 Tiền điều kiện
 - Sinh viên đã đăng nhập qua SSO.
-- Hệ thống đã kết nối với HCMUT_LIBRARY.
+- Hệ thống đã kết nối với HCMUT_LIBRARY.  
 
 ```mermaid
 sequenceDiagram
