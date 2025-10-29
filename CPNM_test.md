@@ -11,7 +11,7 @@ sequenceDiagram
   participant SYS as Hệ thống (Cổng Tutor/Mentor)
   participant LIB as HCMUT_LIBRARY
 
-  Note over SV,SYS: SV đã đăng nhập; hệ thống đã kết nối với HCMUT_LIBRARY
+  Note over SV,SYS: SV đã đăng nhập; hệ thống đã kết nối với HCMUT_LIBRARY  
 
   %% Trigger
   SV->>SYS: Chọn mục Tài liệu môn học của môn X
