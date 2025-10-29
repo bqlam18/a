@@ -1,24 +1,28 @@
-# UC — Truy cập Tài liệu Môn học (Activity Diagram)
+# Activity Diagrams — Student Use Cases (HCMUT Tutor/Mentor)
 
-Tiền điều kiện
-- Sinh viên đã đăng nhập.
-- Hệ thống đã kết nối được với HCMUT_LIBRARY.
+Bao gồm 4 use case phía Sinh viên:
+- Truy cập tài liệu môn học
+- Xem danh sách môn học (đang học)
+- Xem thời khóa biểu
+- Đăng ký môn học kỳ sau
 
-## Sơ đồ hoạt động
+---
+
+## UC — Truy cập tài liệu môn học
 
 ```mermaid
 flowchart TD
   A(("Bắt đầu"))
   B[SV mở mục Tài liệu môn học của môn X]
-  C[Hệ thống gửi yêu cầu tìm tài liệu môn X tới HCMUT_LIBRARY]
-  D{Nhận được danh sách?}
-  E[Hiển thị danh sách tài liệu (tiêu đề, loại, liên kết)]
+  C[Hệ thống yêu cầu HCMUT_LIBRARY tìm tài liệu liên quan đến môn X]
+  D{Nhận được danh sách tài liệu?}
+  E[Hiển thị danh sách tài liệu cho SV]
   F[SV chọn tài liệu D]
   G[Hệ thống yêu cầu HCMUT_LIBRARY cấp quyền hoặc URL tài liệu D]
-  H{Được cấp quyền/URL?}
+  H{Được cấp quyền hoặc URL?}
   I[Hiển thị hoặc tải tài liệu D]
-  J[Thông báo: Không đủ quyền hoặc không tồn tại]
-  K[Thông báo: Không tìm thấy tài liệu liên quan từ thư viện hoặc lỗi kết nối]
+  J[Thông báo không đủ quyền hoặc không tồn tại]
+  K[Thông báo không tìm thấy tài liệu hoặc lỗi kết nối]
   Z(("Kết thúc"))
 
   A --> B --> C --> D
@@ -28,26 +32,88 @@ flowchart TD
   H -->|Không| J --> Z
 ```
 
-## Bản dự phòng (ASCII, nếu gặp lỗi render do ký tự có dấu)
+---
+
+## UC — Xem danh sách môn học (đang học)
 
 ```mermaid
 flowchart TD
-  A(("Bat dau"))
-  B[SV mo muc Tai lieu mon hoc cua mon X]
-  C[He thong gui yeu cau tim tai lieu mon X toi HCMUT_LIBRARY]
-  D{Nhan duoc danh sach?}
-  E[Hien thi danh sach tai lieu]
-  F[SV chon tai lieu D]
-  G[He thong yeu cau HCMUT_LIBRARY cap quyen hoac URL tai lieu D]
-  H{Duoc cap quyen/URL?}
-  I[Mo hoac tai tai lieu D]
-  J[Thong bao: Khong du quyen hoac khong ton tai]
-  K[Thong bao: Khong tim thay tai lieu hoac loi ket noi]
-  Z(("Ket thuc"))
+  A(("Bắt đầu"))
+  B[SV mở trang Môn của tôi]
+  C[Hệ thống yêu cầu HCMUT_DATACORE trả danh sách môn lớp SV đang học trong kỳ hiện tại]
+  D{Lấy được dữ liệu?}
+  E{Có môn trong kỳ hiện tại?}
+  F[Hiển thị danh sách và bộ lọc kỳ hoặc nhóm]
+  G[SV chọn môn X]
+  H[Mở trang môn X]
+  I[Trạng thái rỗng và gợi ý chọn kỳ khác]
+  J[Thông báo lỗi và cho phép thử lại]
+  Z(("Kết thúc"))
 
   A --> B --> C --> D
-  D -->|Co| E --> F --> G --> H
-  D -->|Khong| K --> Z
-  H -->|Co| I --> Z
-  H -->|Khong| J --> Z
+  D -->|Có| E
+  D -->|Lỗi hoặc timeout| J --> Z
+  E -->|Có| F --> G --> H --> Z
+  E -->|Không| I --> Z
+```
+
+---
+
+## UC — Xem thời khóa biểu
+
+```mermaid
+flowchart TD
+  A(("Bắt đầu"))
+  B[SV chọn Thời khóa biểu]
+  C[Hệ thống yêu cầu HCMUT_DATACORE trả lịch học tuần hoặc tháng cho kỳ hiện tại]
+  D{Lấy được lịch?}
+  E[Hiển thị lịch tuần tháng và bộ lọc cơ sở phòng môn]
+  F{Có sự kiện trong khoảng thời gian đã chọn?}
+  G[Hiển thị trạng thái rỗng]
+  H[Thông báo lỗi và cho phép thử lại]
+  Z(("Kết thúc"))
+
+  A --> B --> C --> D
+  D -->|Có| E --> F
+  D -->|Lỗi hoặc timeout| H --> Z
+  F -->|Có| Z
+  F -->|Không| G --> Z
+```
+
+---
+
+## UC — Đăng ký môn học kỳ sau
+
+```mermaid
+flowchart TD
+  A(("Bắt đầu"))
+  B[SV mở Đăng ký môn học kỳ sau]
+  C[Hệ thống yêu cầu HCMUT_DATACORE trả danh mục lớp mở của kỳ kế tiếp]
+  D[Hiển thị danh sách và bộ lọc khung giờ cơ sở giảng viên]
+  E[SV tìm kiếm hoặc lọc]
+  F[SV chọn lớp L muốn đăng ký]
+  G[Hệ thống gửi yêu cầu kiểm tra điều kiện tới HCMUT_DATACORE gồm tiên quyết song hành xung đột và chỗ trống]
+  H{Kết quả hợp lệ?}
+  I[Hiển thị hộp thoại xác nhận]
+  J[SV xác nhận đăng ký]
+  K[Hệ thống tạo đăng ký tại HCMUT_DATACORE và trừ chỗ nguyên tử]
+  L{Còn chỗ?}
+  M[Thông báo Đăng ký thành công và cập nhật lịch dự kiến]
+  N[Thông báo Hết chỗ không ghi nhận]
+  O[Hiển thị lý do không hợp lệ như tiên quyết xung đột hoặc thiếu chỗ]
+  P[SV thêm lớp vào danh sách Yêu thích tùy chọn]
+  Q[Hệ thống lưu vào danh sách Yêu thích]
+  R[SV xem Đề xuất lịch tùy chọn]
+  S[Hệ thống lấy và hiển thị các lịch gợi ý không xung đột]
+  Z(("Kết thúc"))
+
+  A --> B --> C --> D --> E --> F --> G --> H
+  H -->|Hợp lệ| I --> J --> K --> L
+  H -->|Không hợp lệ| O --> Z
+  L -->|Còn chỗ| M --> Z
+  L -->|Hết chỗ| N --> Z
+
+  %% Luồng tùy chọn quay lại danh sách để thao tác tiếp
+  D -.-> P --> Q -.-> D
+  D -.-> R --> S -.-> D
 ```
