@@ -58,39 +58,32 @@ sequenceDiagram
   end
 ```
 
-## UC: Xem danh sách môn học (đang học)
+# UC2 — Xem danh sách môn học (không tách FE/BE)
 
 ```mermaid
 sequenceDiagram
   autonumber
   actor SV as Sinh viên
-  participant FE as FE (Web/Mobile)
-  participant BE as BE (Tutor/Mentor)
-  participant SSO as HCMUT_SSO
+  participant SYS as Hệ thống
   participant DC as HCMUT_DATACORE
 
-  SV->>FE: Nhấn "Môn của tôi"
-  FE->>BE: GET /my-courses?term=current (JWT)
-  BE->>SSO: Xác thực token
-  SSO-->>BE: OK
-  BE->>DC: GET /enrollments/{studentId}?term=current
+  Note over SV,SYS: Tiền điều kiện: SV đã đăng nhập (qua SSO)
+
+  SV->>SYS: Nhấn "Môn của tôi"
+  SYS->>DC: GET enrollments(studentId, term=current)
 
   alt Truy vấn thành công
-    DC-->>BE: Danh sách môn + lớp
-    BE-->>FE: 200 OK (list + bộ lọc)
-    FE-->>SV: Hiển thị danh sách
-    alt SV chọn một môn
-      SV->>FE: Chọn môn X
-      FE->>BE: GET /courses/{X}
-      BE-->>FE: 200 (chi tiết môn)
-      FE-->>SV: Mở trang môn học
+    DC-->>SYS: Danh sách môn + lớp
+    SYS-->>SV: Hiển thị danh sách + bộ lọc (kỳ/nhóm)
+    alt SV chọn một môn X
+      SV->>SYS: Chọn môn X
+      SYS-->>SV: Mở trang môn học X (đi tới UC: Truy cập môn học)
     else Không có môn trong kỳ hiện tại
-      FE-->>SV: Trạng thái rỗng + gợi ý chọn kỳ khác
+      SYS-->>SV: Trạng thái rỗng + gợi ý chọn kỳ khác
     end
-  else Lỗi DATACORE
-    DC-->>BE: 5xx/timeout
-    BE-->>FE: 503 "Không thể tải danh sách môn"
-    FE-->>SV: Hiển thị lỗi, cho phép thử lại
+  else Lỗi truy vấn/timeout
+    DC-->>SYS: 5xx/timeout
+    SYS-->>SV: "Không thể tải danh sách môn" (cho phép thử lại)
   end
 ```
 
