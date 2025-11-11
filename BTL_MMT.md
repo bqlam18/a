@@ -1,282 +1,396 @@
-# BÁO CÁO BÀI TẬP LỚN – WEAPROUS (Reverse Proxy + Tracker + Peers)
+# BÁO CÁO BÀI TẬP LỚN – HỆ THỐNG HTTP + PROXY + TRACKER + P2P CHAT (WeApRous)
 
-Sinh viên: [Điền tên của bạn]  
-MSSV: [Điền MSSV]  
-Môn: Mạng máy tính (CO3094)  
-Ngày nộp: [Điền ngày]
-
----
 
 ## 1. TÓM TẮT
-Đồ án hiện thực một hệ thống web tối giản gồm:
-- Reverse Proxy tự cài đặt (port 8080), định tuyến theo Host header và hỗ trợ load balancing (round-robin).
-- Tracker (port 9000) quản lý vòng đời Peer (register, heartbeat, TTL expire, stats).
-- Sample Backend (port 8000) với các API minh hoạ: /login, /logout, /user, /echo, và phục vụ static.
-- Giao diện web (qua proxy) tích hợp xem danh sách Peers và (đã mở rộng) form đăng ký/heartbeat/update/xoá peer trực tiếp từ UI.
 
-Hệ thống chạy hoàn toàn trên máy cá nhân (127.0.0.1). TTL và heartbeat hoạt động đúng, CORS đầy đủ, có script/README hướng dẫn chạy nhanh.
+Bài tập lớn hiện thực một hệ thống máy chủ HTTP tự xây dựng kết hợp ứng dụng Web và giao tiếp peer‑to‑peer (P2P) trên nền socket thuần Python (không dùng framework web sẵn có). Hệ thống gồm 3 thành phần chính:
 
----
+1) Reverse Proxy (daemon/proxy.py): nhận và định tuyến HTTP theo Host, hỗ trợ cân bằng tải (round‑robin/least‑connection/random).  
+2) Backend Server (daemon/backend.py + apps/sampleApp.py): xử lý route REST (/login, /logout, /user, /echo), quản lý cookie session, phục vụ tệp tĩnh.  
+3) Tracker (apps/tracker.py): “service discovery + liveness” cho peer; có các API register/heartbeat/update/remove/peers/stats và mở rộng heartbeat_batch.  
 
-## 2. YÊU CẦU – MÔI TRƯỜNG – THƯ VIỆN
-- Python ≥ 3.11
-- Hệ điều hành đã kiểm thử: Windows 11 (PowerShell), thử thêm trên Ubuntu 22.04.
-- Thư viện: requests (cho sanity_check), các module chuẩn Python khác.
-- Cổng sử dụng mặc định:
-  - Proxy: 8080
-  - Backend: 8000 (có thể thêm 8001 cho load balancing)
-  - Tracker: 9000
+Phần mở rộng P2P:
+- Peer HTTP API (p2p/p2p_peer.py + start_peer.py): cung cấp /p2p/msg, /p2p/inbox, /p2p/inbox/clear, /p2p/whoami để các peer gửi/nhận tin trực tiếp.  
+- Giao diện Web (static/index.html + static/js/app.js) có panel “Chat P2P” cho phép người dùng chọn Local Peer ID, Target Peer, gửi tin và tải inbox.
 
-> Lưu ý: Mặc định sử dụng 127.0.0.1 để đảm bảo portable. Không hardcode IP LAN.
+Kết quả:
+- Đăng nhập qua proxy, duy trì session bằng cookie.  
+- Tracker quản lý TTL và loại peer hết hạn.  
+- UI có thể đăng ký/heartbeat/update/xóa peer và gửi/nhận tin P2P giữa nhiều peer (một máy hoặc nhiều máy).  
 
 ---
 
-## 3. KIẾN TRÚC HỆ THỐNG
+## 2. GIỚI THIỆU TỔNG QUAN
+
+### 2.1 Mục tiêu
+- Nắm vững mô hình client–server và peer‑to‑peer.  
+- Thực hành socket TCP/IP, giao thức HTTP/1.1, cookie/session.  
+- Tự thiết kế reverse proxy, routing theo Host, cân bằng tải.  
+- Xây dựng tracker cho discovery/liveness (TTL + heartbeat).  
+- Tích hợp WebApp gọi REST + P2P chat.
+
+### 2.2 Công nghệ sử dụng
+- Python 3.11+, mô‑đun chuẩn: socket, threading, time, json, http.server.  
+- RESTful JSON, MIME, CORS.  
+- Không dùng framework web (Flask, FastAPI…) – chỉ socket/HTTP thuần.
+
+---
+
+## 3. THIẾT KẾ HỆ THỐNG
+
+### 3.1 Kiến trúc tổng thể
 
 ```
-[ Browser ]  <--HTTP-->  [ Reverse Proxy :8080 ]  --(forward)-->  [ Backend :8000 (8001) ]
-                                       \ 
-                                        \--(optional)--> [ tracker.local → Tracker :9000 ]
+[ Browser ]
+    | HTTP
+    v
+[ Reverse Proxy :8080 ] ----> [ Backend :8000 (8001...) - Request/Response/HttpAdapter ]
+                        \---> (optional hosts khác)
+                        \---> [ Static files / images / css / js ]
+
+[ Tracker :9000 ]  <--- REST: register/heartbeat/update/remove/peers/stats (+ heartbeat_batch)
+
+[ Peer pX (HTTP API :751x, TCP P2P :701x) ]  <--- /p2p/msg, /p2p/inbox, whoami
+[ Peer pY (HTTP API :751y, TCP P2P :701y) ]
 ```
 
-- Reverse Proxy đọc proxy.conf, định tuyến theo Host (có hỗ trợ nhiều backend cho 1 host với chính sách round-robin).
-- Tracker là dịch vụ REST quản lý Peer. Các dịch vụ/ứng dụng (hoặc UI) giao tiếp với Tracker để đăng ký và gửi heartbeat.
-- UI (trang index) gọi trực tiếp Tracker (CORS đã bật) hoặc qua proxy nếu muốn.
+Luồng chính: Browser → Proxy → Backend (login, set‑cookie) → index.html (JS) → gọi REST tracker và (khi gửi tin) gọi trực tiếp HTTP API của peer đích. Tracker cung cấp danh sách peers (discovery/liveness).
+
+### 3.2 Server Process
+
+Vòng đời xử lý request (áp dụng cho cả proxy/backend):
+- socket.accept() → spawn thread → HttpAdapter.handle_client()  
+- HttpAdapter dựng Request (parse request line, headers, cookies, body), gắn hook route  
+- Thực thi handler nếu có → Response.build_response() → sendall() → close
+
+Routing policy (proxy):
+- round‑robin: xoay vòng tuyến tới các upstream.  
+- least‑connection: chọn backend có số kết nối hoạt động ít nhất.  
+- random: chọn ngẫu nhiên trong các backend “healthy”.
+
+### 3.3 Communication Flow
+
+Client gửi HTTP → Proxy phân tích Host → chọn backend theo policy → chuyển tiếp gói HTTP → Backend xử lý route (hoặc tĩnh) → trả Response → Proxy chuyển lại cho client.  
+Với P2P chat: UI tra danh sách peers từ Tracker → chọn ip:api_port của peer đích → gọi POST /p2p/msg tới peer đích.
 
 ---
 
-## 4. THÀNH PHẦN CHÍNH
-1) Reverse Proxy
-- Đọc cấu hình host → danh sách upstream qua `proxy_pass`.
-- Chính sách `dist_policy round-robin`.
-- Chuẩn hoá Host header và hỗ trợ khóa “host:port” và “host” (khuyến nghị).
+## 4. HIỆN THỰC/PHÂN TÍCH CÁC MODULES
 
-2) Tracker (tracker_routes.py)
-- Endpoint:
-  - GET /tracker/health
-  - POST /tracker/register
-  - POST /tracker/heartbeat
-  - POST /tracker/update
-  - POST /tracker/peer/remove
-  - GET /tracker/peers
-  - GET /tracker/stats
-- TTL cleaner thread mỗi 5 giây; CORS bật trên mọi response và hỗ trợ OPTIONS.
+### 4.1 HTTP Server với Cookie Session
 
-3) Sample Backend
-- Route: /login (GET/POST), /logout, /, /user (GET), /echo (POST), static /static/css|js|images.
-- Đăng nhập demo: admin/password, set cookie và redirect.
+- Xác thực: POST /login (username=admin, password=password).  
+- Thành công: Set‑Cookie: auth=true; chuyển về index.html.  
+- Thất bại: 401 Unauthorized (Unauthorized.html).  
+- Bảo vệ nội dung: /index.html yêu cầu cookie hợp lệ.
 
-4) Giao diện Web (index.html + app.js)
-- Khu vực “Peers từ Tracker”: nhập Tracker URL và lấy danh sách Peers.
-- ĐÃ BỔ SUNG form đăng ký/heartbeat/update/xoá peer trực tiếp từ UI.
+#### 4.1.1 Request (daemon/request.py)
+
+- Vai trò: bóc tách gói HTTP thô → method, path, version, headers (CaseInsensitive), cookies, body; gắn hook route nếu có.  
+- Hàm chính:
+  - extract_request_line(): tách method/path/version.  
+  - prepare_headers(): chuẩn hóa key header về chữ thường.  
+  - prepare(): tổng hợp parse + gắn hook + parse cookie/body.  
+  - prepare_body()/prepare_content_length(): phục vụ khi server đóng vai client (proxy).  
+
+Tương tác:
+- HttpAdapter tạo Request, gán hook, rồi Response sử dụng để dựng phản hồi.
+
+#### 4.1.2 Response (daemon/response.py)
+
+- Thuộc tính: status_code, headers, cookies, _content, reason, request.  
+- Hàm:
+  - get_mime_type(): xác định MIME.  
+  - build_content(): đọc file tĩnh theo đường dẫn, trả 200/404/403/500.  
+  - build_response_header(): lắp header chuẩn (Date, CORS, Content‑Length…).  
+  - build_notfound(), build_response(): luồng tổng gộp logic login/logout/redirect/tĩnh.
+
+Điểm nhấn:
+- CORS mở mặc định: Access‑Control‑Allow‑Origin: *; Allow‑Methods: GET, POST, OPTIONS.  
+- Có nhánh OPTIONS để browser preflight không lỗi.
+
+#### 4.1.3 Backend (daemon/backend.py)
+
+- Tạo socket TCP, listen backlog, spawn một thread cho mỗi client.  
+- Mỗi thread gọi HttpAdapter.handle_client(); log kết nối.  
+- Hàm create_backend(ip, port, routes) → entry point khởi chạy.
+
+#### 4.1.4 Reverse Proxy (daemon/proxy.py)
+
+- Biến PROXY_PASS: ánh xạ hostname → danh sách upstream.  
+- resolve_routing_policy(): round‑robin/least‑connection/random.  
+- forward_request(): mở socket tới backend, gửi request, nhận response trả về client.  
+- get_healthy_backends(): kiểm tra kết nối TCP ngắn hạn.  
+- create_proxy(ip, port, routes): khởi động proxy.
+
+#### 4.1.5 HttpAdapter (daemon/httpadapter.py)
+
+- Cầu nối socket ↔ logic: đọc bytes, Request.prepare(), chạy hook, Response.build_response(), sendall().  
+- Hỗ trợ trích cookies, tạo header ủy quyền khi proxy có user:pass.
 
 ---
 
-## 5. CẤU HÌNH PROXY (LOCAL)
-Ví dụ proxy.conf (local demo):
+### 4.2 Tracker (apps/tracker.py)
 
-```conf
-host "localhost" {
-    proxy_pass http://127.0.0.1:8000;
-}
+- Trạng thái:  
+  - peers: peer_id → info {ip, port, roles, channels, meta, load, ttl, last_heartbeat,...}  
+  - index_role, index_channel để truy vấn nhanh.  
+- TTL cleaner: thread 5s quét và loại peers quá hạn.  
+- CORS mở; có route OPTIONS cho preflight.
 
-host "app1.local" {
-    proxy_pass http://127.0.0.1:9001;
-}
+Endpoints:
+- GET /tracker/health  
+- POST /tracker/register  
+- POST /tracker/heartbeat  
+- POST /tracker/update  
+- POST /tracker/peer/remove  
+- GET /tracker/peers  
+- GET /tracker/stats  
+- NEW: POST /tracker/heartbeat_batch  
+  - Body: {"peers":["id1","id2"], "ttl":120, "load":{"cpu":0.35}}  
+  - Trả: {"updated":[...], "not_found":[...]}
 
-host "app2.local" {
-    proxy_pass http://127.0.0.1:9002;
-    proxy_pass http://127.0.0.1:9003;
-    dist_policy round-robin
-}
-```
-
-> Trên máy cá nhân chỉ cần block `host "localhost"` là đủ để demo backend qua proxy.
+Mục đích:
+- Service discovery + liveness (TTL).  
+- Cho phép UI thao tác đăng ký/heartbeat/update/xóa peer, xem danh sách/stats.
 
 ---
 
-## 6. HƯỚNG DẪN CHẠY
-Mở 3 terminal (hoặc dùng script chạy tất cả).
+### 4.3 Ứng dụng P2P Chat
 
-1) Tracker (9000)
-```bash
-python start_tracker.py --server-port 9000
-# Kiểm tra:
-curl http://127.0.0.1:9000/tracker/health
-```
+#### 4.3.1 Peer TCP + HTTP API (p2p/p2p_peer.py)
 
-2) Backend (8000)
+- TCP P2P (JSON Lines):  
+  - Listener thread và recv per‑connection; hỗ trợ broadcast kênh (“chat”), direct message (“direct”), gói “hello”.  
+- HTTP API cho browser:  
+  - POST /p2p/msg: nhận tin (“from”, “to”, “content”) → lưu inbox.  
+  - GET /p2p/inbox: trả inbox hiện thời.  
+  - POST /p2p/inbox/clear: xóa inbox.  
+  - GET /p2p/whoami: trả về peer_id thực trên cổng đang nghe.  
+  - Bật CORS.  
+- Inbox lưu trong bộ nhớ tiến trình; có thể mở rộng lưu DB.
+
+#### 4.3.2 Trình khởi động peer (start_peer.py)
+
+- Khởi chạy đồng thời:
+  - TCP P2P listener (port 701x).  
+  - HTTP API cho UI (port 751x).  
+- Tùy chọn --register: tự đăng ký vào tracker với roles=["p2p"], channels=["chat"], meta={"api_port":..., "p2p_port":...} và chạy heartbeat định kỳ.
+
+#### 4.3.3 WebApp (static/index.html + static/js/app.js)
+
+- Khu “Peers từ Tracker”: nhập Tracker URL, lấy danh sách /tracker/peers.  
+- Khu “Đăng ký/Quản lý Peer”: form register + heartbeat + update TTL + remove.  
+- Khu “Chat P2P”:  
+  - Local Peer ID, chọn Target Peer (lọc channel=chat/role=p2p).  
+  - Gửi tin: UI gọi POST /p2p/msg tới api_port của peer đích.  
+  - Tải Inbox/Xóa Inbox: UI gọi /p2p/inbox(/clear) tới api_port của peer local.  
+  - Ưu tiên meta.api_port nếu có; fallback p.port.
+
+#### 4.3.4 Cách triển khai thực tế
+
+- Khởi động backend (sample app) và tracker:
 ```bash
 python start_sampleapp.py --server-port 8000
-# Kiểm tra:
-# Mở http://127.0.0.1:8000/login và đăng nhập admin / password
+python start_tracker.py    --server-port 9000
 ```
 
-3) Proxy (8080)
+- Khởi động reverse proxy:
 ```bash
 python start_proxy.py --server-port 8080
-# Kiểm tra:
-# Mở http://localhost:8080/login → sau login, / hiển thị trang chính, static 200
 ```
 
----
-
-## 7. KỊCH BẢN KIỂM THỬ (DEMO)
-
-### 7.1. UI qua Proxy
-- Truy cập http://localhost:8080/login → đăng nhập → về trang index.
-- Nút “Tải” (GET /user): hiển thị JSON user.
-- Nút “Gửi” (POST /echo): nhập JSON → phản hồi JSON.
-
-### 7.2. Tracker – Register & Heartbeat
-- Trong UI, ô “Tracker URL”: http://127.0.0.1:9000
-- Bấm “Lấy /tracker/peers”: ban đầu count=0.
-- Đăng ký peer trực tiếp từ UI (Form Đăng ký/Quản lý Peer):
-  - Template Backend → bấm “Đăng ký” → OK.
-  - Bấm “Heartbeat” để gia hạn.
-- Hoặc dùng lệnh PowerShell:
-```powershell
-Invoke-RestMethod -Uri http://127.0.0.1:9000/tracker/register -Method Post `
-  -Body '{"peer_id":"backend1","ip":"127.0.0.1","port":8000,"roles":["backend"],"channels":["http"],"ttl":60}' `
-  -ContentType 'application/json'
-Invoke-RestMethod -Uri http://127.0.0.1:9000/tracker/peers | ConvertTo-Json -Depth 5
+- Mỗi peer P2P chạy riêng (có HTTP API + auto register):
+```bash
+# Peer 1
+python start_peer.py --peer-id p1 --p2p-port 7010 --api-port 7510 --register --tracker http://127.0.0.1:9000 --ttl 180
+# Peer 2
+python start_peer.py --peer-id p2 --p2p-port 7011 --api-port 7511 --register --tracker http://127.0.0.1:9000 --ttl 180
 ```
 
-### 7.3. TTL Expire
-- Đăng ký p2 TTL=15 (qua UI hoặc lệnh).
-- Không gửi heartbeat cho p2.
-- Sau ~20 giây bấm “Lấy /tracker/peers” → p2 biến mất. Console tracker in “[Tracker] expired peers: ['p2']”.
-
-### 7.4. Load Balancing (tuỳ chọn)
-- Chạy backend thứ 2: `python start_sampleapp.py --server-port 8001`
-- Thêm vào proxy.conf:
-```conf
-host "localhost" {
-    proxy_pass http://127.0.0.1:8000;
-    proxy_pass http://127.0.0.1:8001;
-    dist_policy round-robin
-}
+- Truy cập qua trình duyệt:
+```text
+http://localhost:8080/login.html
 ```
-- Refresh nhiều lần → log hai backend luân phiên nhận request.
+Đăng nhập xong vào index.html → nhập Tracker URL (http://127.0.0.1:9000) → Refresh danh sách → dùng “Chat P2P” để gửi/nhận tin giữa p1 và p2.
+
+Ghi chú:
+- Có thể demo toàn bộ trên MỘT máy (mỗi peer là một tiến trình với api‑port khác nhau).  
+- Nếu demo đa máy trong LAN, chạy peers với --ip 0.0.0.0 và mở firewall cổng 751x.
 
 ---
 
-## 8. KẾT QUẢ DỰ KIẾN
-- /login qua proxy: 200 (form), POST /login → 302 về “/”, cookie set.
-- / (index) tải được assets: styles.css, app.js, welcome.png = 200.
-- /user, /echo qua proxy: 200 (sau đăng nhập).
-- /tracker/register trả về đối tượng peer với registered_at, last_heartbeat, ttl.
-- /tracker/peers hiển thị count và danh sách peers hiện còn sống.
-- TTL expire hoạt động (peer không heartbeat sẽ bị xóa sau ttl + ≤5s).
-- UI có thể đăng ký/heartbeat/update/xoá peer thành công.
+### 4.4 Code hiện thực
 
-> Chèn ảnh chụp màn hình minh chứng:  
-> - Kết quả đăng ký backend1, p1.  
-> - Peers count trước/sau.  
-> - TTL expire (p2 biến mất).  
-> - UI form đăng ký peer và kết quả.
+#### Daemon
+
+| File | Vai trò |
+|------|---------|
+| daemon/request.py | Phân tích gói HTTP, tách method/path/headers/cookies/body; gắn hook route. |
+| daemon/response.py | Dựng HTTP response (status line, headers, body), xác định MIME, CORS, cookie. |
+| daemon/httpadapter.py | Cầu nối socket ↔ xử lý HTTP; đọc yêu cầu, gọi handler, gửi phản hồi. |
+| daemon/backend.py | Máy chủ TCP đa luồng, listen và spawn thread cho từng client, gọi HttpAdapter. |
+| daemon/proxy.py | Reverse proxy định tuyến theo Host; policy round‑robin/least‑connection/random; health‑check. |
+| daemon/dictionary.py | CaseInsensitiveDict cho header không phân biệt hoa/thường. |
+| daemon/utils.py | Hàm tiện ích (log, parse…), dùng chung cho daemon. |
+| daemon/weaprous.py | Khung App/router (nếu sử dụng) để register routes. |
+
+#### Ứng dụng (WeApRous App)
+
+| Tệp | Vai trò |
+|-----|---------|
+| apps/sampleApp.py | Ứng dụng REST mẫu: /login, /logout, /user, /echo; phục vụ tĩnh. |
+| apps/tracker.py | Tracker REST: register/heartbeat/update/remove/peers/stats (+ heartbeat_batch), TTL cleaner. |
+| p2p/p2p_peer.py | Peer TCP + HTTP API cho browser: /p2p/msg, /p2p/inbox, /p2p/inbox/clear, /p2p/whoami. |
+| start_peer.py | Chạy một peer: TCP P2P + HTTP API; tùy chọn --register và heartbeat định kỳ. |
+
+#### WebApp (Giao diện HTML)
+
+| File | Chức năng |
+|------|-----------|
+| static/index.html | Trang chính: panel user/echo; panel tracker; form register/heartbeat/update/remove peer; panel Chat P2P. |
+| static/js/app.js | Logic frontend: gọi REST tracker/backend, gửi/nhận tin P2P, hiển thị JSON. |
+| static/css/styles.css | Giao diện CSS. |
+| static/images/{favicon.ico,welcome.jpg} | Tài nguyên tĩnh. |
+| login.html (phục vụ từ apps/sampleApp) | Form đăng nhập, POST /login. |
+| Unauthorized.html (nếu có) | Trang thông báo 401 khi chưa đăng nhập. |
 
 ---
 
-## 9. BẢO MẬT – ỔN ĐỊNH – HẠN CHẾ
-- CORS cho Tracker: Access-Control-Allow-Origin: *; Methods: GET, POST, OPTIONS.
-- Chưa có xác thực cho /tracker/register → phù hợp demo nội bộ; nếu mở LAN, có thể thêm “X-Tracker-Key” bắt buộc.
-- TTL/Heartbeat: đảm bảo đơn vị giây nhất quán (time.time()).
-- Proxy: nên in log rõ ràng khi không tìm thấy mapping host.
-- Hạn chế: Reverse proxy chưa hỗ trợ HTTPS và một số header nâng cao.
+## 5. KIỂM THỬ VÀ KẾT QUẢ
+
+### 5.1 Sanity test (REST)
+- GET /tracker/health → 200 {ok:true, uptime:...}  
+- POST /tracker/register → 201 trả đối tượng peer (registered_at, ttl, last_heartbeat).  
+- POST /tracker/heartbeat_batch → {"updated":[...], "not_found":[]}  
+- GET /tracker/peers → count và danh sách peers đang sống.  
+- TTL expire: tạo peer TTL ngắn (15s), không heartbeat → sau ~20s biến mất.
+
+### 5.2 Đăng nhập và truy cập qua Proxy
+- GET /login.html qua http://localhost:8080 → form hiển thị.  
+- POST /login (admin/password) → Set‑Cookie: auth=true; 302 về /.  
+- /index.html tải CSS/JS/ảnh 200.  
+- /user, /echo qua proxy hoạt động bình thường (sau login).
+
+### 5.3 Chat P2P (HTTP API)
+- start_peer.py chạy 2 peer p1@7510, p2@7511 (đã register vào tracker).  
+- Tại UI:
+  - Local Peer ID: p1; Target: p2 → “Gửi tin” → 200.  
+  - Đổi Local Peer ID: p2 → “Tải inbox local” → thấy tin nhận.  
+  - “Xóa inbox” → count=0.  
+- whoami kiểm chứng đúng cổng/peer:
+  - GET http://127.0.0.1:7510/p2p/whoami → {"peer_id":"p1"}  
+  - GET http://127.0.0.1:7511/p2p/whoami → {"peer_id":"p2"}
+
+Kết quả đạt:
+- Discovery/liveness chính xác; TTL cleaner loại peer quá hạn.  
+- Proxy định tuyến Host và round‑robin (khi có nhiều backend).  
+- UI thao tác đủ: register/heartbeat/update/remove/batch + P2P chat.
 
 ---
 
-## 10. KẾT LUẬN
-Bài làm đáp ứng các yêu cầu:
-- Reverse proxy định tuyến theo Host và hỗ trợ round-robin.
-- Tracker quản lý Peer theo cơ chế register/heartbeat/TTL expire.
-- UI cung cấp cả quan sát (peers) lẫn thao tác (register/heartbeat/update/remove).
-- Tài liệu hướng dẫn chạy từ đầu, kịch bản kiểm thử và kết quả.
+## 6. ĐÁNH GIÁ
+
+Ưu điểm:
+- Tự hiện thực pipeline HTTP đầy đủ bằng socket: dễ hiểu cơ chế lớp giao vận.  
+- Proxy có policy đa dạng, health‑check cơ bản.  
+- Tracker có đủ vòng đời peer và mở rộng heartbeat_batch.  
+- UI thân thiện, có panel Chat P2P chạy trên một máy hoặc nhiều máy.  
+
+Hạn chế:
+- Chưa có HTTPS; bảo mật demo mức cơ bản (chưa có auth cho tracker/peer).  
+- Inbox lưu RAM, mất khi restart; chưa realtime (WS) trên trình duyệt.  
+- NAT traversal chưa xử lý (P2P chủ yếu trong cùng host/LAN).
 
 Hướng phát triển:
-- Thêm HTTPS, health-check upstream, batch heartbeat, và dashboard realtime TTL remaining.
-- Bổ sung auth/secret key cho các route nhạy cảm của Tracker.
+- Bổ sung secret header (X‑Tracker‑Key, X‑P2P-Key) hoặc token.  
+- Thêm WebSocket để nhận inbox realtime.  
+- Lưu inbox vào SQLite/Redis; lọc peers theo role/channel qua querystring.  
+- Chính sách load‑balancing dựa trên load từ tracker (least‑load).
+
+---
+
+## 7. HƯỚNG DẪN TRIỂN KHAI NHANH
+
+1) Cài đặt môi trường:
+```bash
+python -V  # >= 3.11
+pip install -r requirements.txt  # nếu có (requests cho sanity_check)
+```
+
+2) Chạy các thành phần:
+```bash
+# Tracker, Backend, Proxy
+python start_tracker.py    --server-port 9000
+python start_sampleapp.py  --server-port 8000
+python start_proxy.py      --server-port 8080
+
+# Peers (mỗi cửa sổ terminal riêng)
+python start_peer.py --peer-id p1 --p2p-port 7010 --api-port 7510 --register --tracker http://127.0.0.1:9000 --ttl 180
+python start_peer.py --peer-id p2 --p2p-port 7011 --api-port 7511 --register --tracker http://127.0.0.1:9000 --ttl 180
+```
+
+3) Truy cập:
+```text
+http://localhost:8080/login.html
+```
+- Đăng nhập (admin/password) → vào index, đặt Tracker URL = http://127.0.0.1:9000.  
+- Chat P2P: Local Peer ID = p1 → gửi tới p2; đổi sang p2 → “Tải inbox local”.
+
+4) Kiểm chứng nhanh bằng PowerShell/curl:
+```powershell
+# Heartbeat batch
+$body = @{ peers=@("p1","p2"); ttl=180; load=@{cpu=0.2} } | ConvertTo-Json
+Invoke-RestMethod -Uri http://127.0.0.1:9000/tracker/heartbeat_batch -Method Post -Body $body -ContentType 'application/json'
+
+# Gửi tin trực tiếp tới p2 (HTTP API)
+Invoke-RestMethod -Uri http://127.0.0.1:7511/p2p/msg -Method Post `
+  -Body '{"from":"p1","to":"p2","content":"hello"}' -ContentType 'application/json'
+
+# Đọc inbox p2
+Invoke-RestMethod -Uri http://127.0.0.1:7511/p2p/inbox | ConvertTo-Json -Depth 5
+```
+
+---
+
+## 8. KẾT LUẬN
+
+Bài làm đáp ứng mục tiêu: hiện thực một hệ thống HTTP đa tầng (Proxy–Backend–App), một dịch vụ Tracker quản lý vòng đời peer, và cơ chế P2P chat dựa trên HTTP API để trình duyệt có thể gửi/nhận tin trực tiếp giữa các peer. Toàn bộ được xây dựng bằng socket thuần Python, minh họa rõ ràng pipeline HTTP, cookie session, routing theo Host, load‑balancing, discovery + TTL/heartbeat và truyền thông P2P.
 
 ---
 
 ## PHỤ LỤC
 
-### A. Lệnh nhanh (PowerShell)
-```powershell
-# Register backend1
-Invoke-RestMethod -Uri http://127.0.0.1:9000/tracker/register -Method Post `
-  -Body '{"peer_id":"backend1","ip":"127.0.0.1","port":8000,"roles":["backend"],"channels":["http"],"ttl":60}' `
-  -ContentType 'application/json'
+### A. proxy.conf (ví dụ local)
 
-# Heartbeat
-Invoke-RestMethod -Uri http://127.0.0.1:9000/tracker/heartbeat -Method Post `
-  -Body '{"peer_id":"backend1"}' -ContentType 'application/json'
-
-# Peers
-Invoke-RestMethod -Uri http://127.0.0.1:9000/tracker/peers | ConvertTo-Json -Depth 5
-
-# P2 TTL=15 (demo expire)
-Invoke-RestMethod -Uri http://127.0.0.1:9000/tracker/register -Method Post `
-  -Body '{"peer_id":"p2","ip":"127.0.0.1","port":7011,"roles":["p2p"],"channels":["chat"],"ttl":15}' `
-  -ContentType 'application/json'
-```
-
-### B. Script giữ sống nhiều peer (PS)
-```powershell
-$tracker = "http://127.0.0.1:9000"
-$peers = @(
-  @{ id="backend1"; interval=30 },
-  @{ id="p1";       interval=25 }
-)
-while ($true) {
-  $now = Get-Date
-  foreach ($p in $peers) {
-    if (-not $p.next -or $now -ge $p.next) {
-      try {
-        Invoke-RestMethod -Uri "$tracker/tracker/heartbeat" -Method Post `
-          -Body ("{""peer_id"":""{0}""}" -f $p.id) -ContentType 'application/json' | Out-Host
-      } catch { Write-Host "HB error $($p.id): $_" -ForegroundColor Red }
-      $p.next = $now.AddSeconds($p.interval)
-    }
-  }
-  Start-Sleep -Seconds 5
+```conf
+host "localhost" {
+    proxy_pass http://127.0.0.1:8000;
 }
+# Có thể thêm nhiều host và round-robin nếu chạy backend 8001, 8002...
 ```
 
-### C. Sanity test (Python)
+### B. Sanity script (tùy chọn)
+
 ```python
 # sanity_check.py
-import requests, json, sys
-BACKEND="http://127.0.0.1:8000"; PROXY="http://localhost:8080"; TRACKER="http://127.0.0.1:9000"
+import requests, json
+T="http://127.0.0.1:9000"; B="http://127.0.0.1:8000"; P="http://localhost:8080"
 def chk(u,m="GET",**kw):
-    try: r=requests.request(m,u,timeout=5,**kw); print(r.status_code,u); return r
-    except Exception as e: print("ERR",u,e)
-# tracker
-chk(TRACKER+"/tracker/health")
-# backend direct
-s=requests.Session(); chk(BACKEND+"/login"); chk(BACKEND+"/login","POST",data={"username":"admin","password":"password"}); chk(BACKEND+"/user")
-# proxy
-p=requests.Session(); chk(PROXY+"/login"); chk(PROXY+"/login","POST",data={"username":"admin","password":"password"}); chk(PROXY+"/user")
-# tracker register + peers
-payload={"peer_id":"sanity-backend","ip":"127.0.0.1","port":8000,"roles":["backend"],"channels":["http"],"ttl":60}
-chk(TRACKER+"/tracker/register","POST",headers={"Content-Type":"application/json"},data=json.dumps(payload)); chk(TRACKER+"/tracker/peers")
+    try:
+        r=requests.request(m,u,timeout=5,**kw); print(r.status_code,u); return r
+    except Exception as e:
+        print("ERR",u,e)
+
+chk(T+"/tracker/health")
+s=requests.Session(); chk(B+"/login"); chk(B+"/login","POST",data={"username":"admin","password":"password"}); chk(B+"/user")
+p=requests.Session(); chk(P+"/login"); chk(P+"/login","POST",data={"username":"admin","password":"password"}); chk(P+"/user")
+
+payload={"peer_id":"sanity","ip":"127.0.0.1","port":7510,"roles":["p2p"],"channels":["chat"],"ttl":120,"meta":{"api_port":7510}}
+chk(T+"/tracker/register","POST",headers={"Content-Type":"application/json"},data=json.dumps(payload))
+chk(T+"/tracker/peers")
 ```
 
-### D. Ghi chú CORS trong Tracker
-- Mọi response kèm:
-  - Access-Control-Allow-Origin: *
-  - Access-Control-Allow-Headers: Content-Type
-  - Access-Control-Allow-Methods: GET, POST, OPTIONS
-- Có route OPTIONS cho các endpoint.
-
-### E. Khác biệt so với cấu hình mẫu dùng IP LAN
-- Bài này chuẩn hoá dùng 127.0.0.1; nếu cần IP LAN có thể thêm proxy.conf.lab.
-- Proxy hỗ trợ khóa host cả dạng “host:port” và “host” (khuyến nghị).
-
----
-
-## TÀI LIỆU THAM KHẢO
-- RFC 7230–7235 (HTTP/1.1)
-- Nginx upstream (concept) – tham khảo chính sách round-robin
-- Tài liệu môn học – yêu cầu và cấu trúc bài tập lớn
+### C. Ghi chú vận hành
+- Với demo một máy: mỗi peer dùng api‑port khác nhau (7510, 7511, …).  
+- Với demo nhiều máy trong LAN: chạy peer với --ip 0.0.0.0 và mở firewall cổng api‑port.
