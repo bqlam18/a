@@ -1,299 +1,200 @@
-# Class Diagram — Tutor/Mentor System
-
-## 1. Domain Classes
-
 ```mermaid
 classDiagram
   direction LR
 
-  %% Core Actor
   class Student {
-    +studentId: String
-    +name: String
-    +email: String
-    +profile: Profile
-    +enrollments: List~Enrollment~
-    +submissions: List~AssignmentSubmission~
-    +getEnrolledCourses(): List~CourseSection~
-    +getProgress(courseSectionId): ProgressReport
-    +submitAssignment(assignmentId, file): SubmissionResult
+    +studentId
+    +name
+    +email
+    +profile
+    +getEnrolledCourses()
+    +getProgress(courseSectionId)
+    +submitAssignment(assignmentId, file)
   }
-
   class Tutor {
-    +tutorId: String
-    +name: String
-    +email: String
-    +profile: Profile
-    +courses: List~CourseSection~
-    +availability: List~Availability~
-    +feedback: List~SurveyResponse~
-    +complaints: List~Complaint~
-    +manageAssignment(assignmentId): void
-    +gradeAssignment(submissionId, score, comment): void
-    +makeAnnouncement(courseSectionId, content): void
+    +tutorId
+    +name
+    +email
+    +profile
+    +courses
+    +availability
+    +manageAssignment(assignmentId)
+    +gradeAssignment(submissionId, score, comment)
+    +makeAnnouncement(courseSectionId, content)
   }
-
   class Admin {
-    +adminId: String
-    +name: String
-    +email: String
-    +profile: Profile
-    +manageSystem(): void
+    +adminId
+    +name
+    +email
+    +profile
+    +manageSystem()
   }
-
   class Profile {
-    +profileId: String
-    +role: Role
-    +bio: String
-    +avatarUrl: String
-    +updateProfile(data): void
+    +profileId
+    +role
+    +bio
+    +avatarUrl
+    +updateProfile(data)
   }
-
-  %% Core Entities
   class Course {
-    +courseId: String
-    +courseName: String
-    +faculty: String
-    +sections: List~CourseSection~
-    +materials: List~Material~
-    +assignments: List~Assignment~
+    +courseId
+    +courseName
+    +faculty
+    +sections
+    +materials
+    +assignments
   }
-
   class CourseSection {
-    +sectionId: String
-    +courseId: String
-    +term: String
-    +tutorId: String
-    +students: List~Student~
-    +schedule: List~ScheduleSlot~
-    +assignments: List~Assignment~
-    +announcements: List~Announcement~
-    +attendanceEvents: List~AttendanceEvent~
-    +getProgressReport(): ProgressReport
+    +sectionId
+    +courseId
+    +term
+    +tutorId
+    +students
+    +schedule
+    +assignments
+    +announcements
+    +attendanceEvents
+    +getProgressReport()
   }
-
   class Enrollment {
-    +enrollmentId: String
-    +studentId: String
-    +sectionId: String
-    +status: EnrollmentStatus
-    +enrolledAt: DateTime
+    +enrollmentId
+    +studentId
+    +sectionId
+    +status
+    +enrolledAt
   }
-
   class Material {
-    +materialId: String
-    +title: String
-    +type: MaterialType
-    +importance: MaterialImportance
-    +description: String
-    +fileUrl: String
-    +version: String
-    +addedBy: String
-    +addedAt: DateTime
-    +updateMetadata(data): void
+    +materialId
+    +title
+    +type
+    +importance
+    +description
+    +fileUrl
+    +version
+    +addedBy
+    +addedAt
   }
-
   class Assignment {
-    +assignmentId: String
-    +sectionId: String
-    +title: String
-    +description: String
-    +dueDate: DateTime
-    +type: AssignmentType
-    +maxScore: float
-    +createdBy: String
-    +createdAt: DateTime
-    +updateAssignment(data): void
+    +assignmentId
+    +sectionId
+    +title
+    +description
+    +dueDate
+    +type
+    +maxScore
+    +createdBy
+    +createdAt
+    +updateAssignment(data)
   }
-
   class AssignmentSubmission {
-    +submissionId: String
-    +assignmentId: String
-    +studentId: String
-    +fileUrl: String
-    +submittedAt: DateTime
-    +score: float
-    +feedback: String
-    +status: SubmissionStatus
-    +grade(score, feedback): void
+    +submissionId
+    +assignmentId
+    +studentId
+    +fileUrl
+    +submittedAt
+    +score
+    +feedback
+    +status
+    +grade(score, feedback)
   }
-
-  %% Progress & Score
   class ProgressReport {
-    +studentId: String
-    +sectionId: String
-    +completion: float
-    +avgScore: float
-    +attendance: int
-    +lastUpdated: DateTime
+    +studentId
+    +sectionId
+    +completion
+    +avgScore
+    +attendance
+    +lastUpdated
   }
-
-  %% Announcements & Notification
   class Announcement {
-    +announcementId: String
-    +sectionId: String
-    +content: String
-    +createdBy: String
-    +timestamp: DateTime
-    +visibleUntil: DateTime
+    +announcementId
+    +sectionId
+    +content
+    +createdBy
+    +timestamp
+    +visibleUntil
   }
-
   class Notification {
-    +notificationId: String
-    +userId: String
-    +type: NotificationType
-    +content: String
-    +createdAt: DateTime
-    +read: Boolean
-    +markAsRead(): void
+    +notificationId
+    +userId
+    +type
+    +content
+    +createdAt
+    +read
+    +markAsRead()
   }
-
-  %% Attendance
   class AttendanceEvent {
-    +attendanceId: String
-    +sectionId: String
-    +date: DateTime
-    +openedBy: String
-    +lateThreshold: DateTime
-    +attendanceList: List~AttendanceEntry~
-    +openAttendance(): void
-    +closeAttendance(): void
+    +attendanceId
+    +sectionId
+    +date
+    +openedBy
+    +lateThreshold
+    +attendanceList
+    +openAttendance()
+    +closeAttendance()
   }
-
   class AttendanceEntry {
-    +attendanceEntryId: String
-    +attendanceId: String
-    +studentId: String
-    +status: AttendanceStatus
-    +timestamp: DateTime
+    +attendanceEntryId
+    +attendanceId
+    +studentId
+    +status
+    +timestamp
+    +updateStatus(status)
   }
-
-  %% Survey & Complaint
   class SurveyResponse {
-    +responseId: String
-    +studentId: String
-    +sectionId: String
-    +formData: List~SurveyAnswer~
-    +submittedAt: DateTime
+    +responseId
+    +studentId
+    +sectionId
+    +formData
+    +submittedAt
   }
-
-  class SurveyAnswer {
-    +questionId: String
-    +answer: String
-    +score: int
-  }
-
   class Complaint {
-    +complaintId: String
-    +byUserId: String
-    +sectionId: String
-    +relatedData: String
-    +content: String
-    +files: List~File~
-    +status: ComplaintStatus
-    +response: String
-    +createdAt: DateTime
-    +resolvedAt: DateTime
+    +complaintId
+    +byUserId
+    +sectionId
+    +content
+    +status
+    +createdAt
+    +resolvedAt
+    +response
   }
-
   class File {
-    +fileId: String
-    +fileName: String
-    +fileType: String
-    +fileUrl: String
-    +size: int
-    +uploadedAt: DateTime
+    +fileId
+    +fileName
+    +fileType
+    +fileUrl
+    +size
+    +uploadedAt
   }
 
-%% Integration Adapters
   class DataCoreClient {
-    +getCourses(studentId): List~Course~
-    +getSections(tutorId): List~CourseSection~
-    +getStudentProfile(userId): Profile
-    +registerCourse(studentId, sectionId): RegistrationResult
-    +getSchedule(studentId|tutorId): List~ScheduleSlot~
-    +getGrades(userId): List~AssignmentSubmission~
-    +getAttendance(sectionId): List~AttendanceEvent~
+    +getCourses(studentId)
+    +getSections(tutorId)
+    +getStudentProfile(userId)
+    +registerCourse(studentId, sectionId)
+    +getSchedule(studentId_or_tutorId)
+    +getGrades(userId)
+    +getAttendance(sectionId)
   }
-
   class LibraryClient {
-    +searchMaterials(courseId): List~Material~
-    +getMaterial(materialId): Material
+    +searchMaterials(courseId)
+    +getMaterial(materialId)
   }
-
   class SSOClient {
-    +authenticate(account, password): AuthResult
-    +getRoles(userId): List~Role~
-    +syncUserProfile(userId): Profile
+    +authenticate(account, password)
+    +getRoles(userId)
+    +syncUserProfile(userId)
   }
-
   class NotificationService {
-    +sendNotification(userId, content): NotificationResult
-    +getUnreadNotifications(userId): List~Notification~
+    +sendNotification(userId, content)
+    +getUnreadNotifications(userId)
   }
-
   class SurveyService {
-    +getSurvey(sectionId): List~SurveyForm~
-    +submitSurvey(studentId, sectionId, formData): SurveyResult
-    +getSurveyResults(sectionId): List~SurveyResponse~
+    +getSurvey(sectionId)
+    +submitSurvey(studentId, sectionId, formData)
+    +getSurveyResults(sectionId)
   }
 
-%% ENUMS
-  enum Role {
-    STUDENT
-    TUTOR
-    ADMIN
-    OFFICER
-  }
-  enum EnrollmentStatus {
-    ENROLLED
-    DROPPED
-    COMPLETED
-    WAITLIST
-  }
-  enum AssignmentType {
-    QUIZ
-    HOMEWORK
-    PROJECT
-  }
-  enum SubmissionStatus {
-    SUBMITTED
-    GRADED
-    LATE
-    REJECTED
-  }
-  enum MaterialType {
-    SYLLABUS
-    SLIDE
-    TEXTBOOK
-    EXERCISE
-    ANNOUNCEMENT
-    OTHER
-  }
-  enum MaterialImportance {
-    REQUIRED
-    OPTIONAL
-  }
-  enum AttendanceStatus {
-    PRESENT
-    LATE
-    ABSENT
-  }
-  enum NotificationType {
-    DEADLINE
-    ANNOUNCEMENT
-    EVENT
-    FEEDBACK
-    SYSTEM
-  }
-  enum ComplaintStatus {
-    OPEN
-    IN_PROGRESS
-    RESOLVED
-    REJECTED
-  }
-
-%% RELATIONSHIPS
+  %% Relationships (Mermaid only supports basic ones)
   Student "1" --> "*" Enrollment : enrolls
   Tutor "1" --> "*" CourseSection : teaches
   Course "1" --> "*" CourseSection : contains
@@ -301,7 +202,7 @@ classDiagram
   CourseSection "*" --> "*" Student : hasStudent
   CourseSection "1" --> "*" Announcement : hasAnnouncements
   CourseSection "1" --> "*" AttendanceEvent : hasAttendance
-  AttendanceEvent "1" --> "*" AttendanceEntry : attendanceOf
+  AttendanceEvent "1" --> "*" AttendanceEntry : hasEntries
   Assignment "1" --> "*" AssignmentSubmission : hasSubmission
   Student "1" --> "*" AssignmentSubmission : submits
   CourseSection "1" --> "*" Assignment : hasAssignment
@@ -312,8 +213,28 @@ classDiagram
   Complaint "1" --> "1" CourseSection : relatesTo
   Complaint "*" --> "1" File : hasAttachment
 ```
+---
+
+## **Ghi chú liệt kê giá trị enum/document ngoài diagram:**
+- **Role**: STUDENT, TUTOR, ADMIN, OFFICER  
+- **EnrollmentStatus**: ENROLLED, DROPPED, COMPLETED, WAITLIST  
+- **AssignmentType**: QUIZ, HOMEWORK, PROJECT  
+- **SubmissionStatus**: SUBMITTED, GRADED, LATE, REJECTED  
+- **MaterialType**: SYLLABUS, SLIDE, TEXTBOOK, EXERCISE, ANNOUNCEMENT, OTHER  
+- **MaterialImportance**: REQUIRED, OPTIONAL  
+- **AttendanceStatus**: PRESENT, LATE, ABSENT  
+- **NotificationType**: DEADLINE, ANNOUNCEMENT, EVENT, FEEDBACK, SYSTEM  
+- **ComplaintStatus**: OPEN, IN_PROGRESS, RESOLVED, REJECTED
 
 ---
+
+**Nếu vẫn lỗi:**
+- Đọc lại doc [Mermaid class diagram for GitHub](https://docs.github.com/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams#creating-class-diagrams-and-state-diagrams)
+- Nhớ: Không dùng enum, interface, stereotype.
+- Không khai báo kiểu và thuộc tính kiểu chi tiết (chỉ ghi tên thuộc tính, phương thức).
+- Đặt các giá trị enum dưới diagram bằng bảng hoặc ghi chú.
+
+Nếu muốn mình xuất lại full file bằng markdown (để copy vào README hoặc báo cáo), bảo mình nhé!
 
 ## 2. Method List & Description (Domain + Services + Adapter)
 
